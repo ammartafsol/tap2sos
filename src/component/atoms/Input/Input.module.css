@@ -1,0 +1,131 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.labelText {
+  color: var(--black-v7);
+  font-family: var(--inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.14px;
+  margin-bottom: 10px;
+}
+
+.inputBox {
+  height: 100%;
+  padding: 15px 10px;
+  width: 100%;
+  border: 1px solid var(--border);
+}
+
+.noBorder {
+  border: none;
+}
+
+.inputPassContainer {
+  width: 100%;
+  display: flex;
+  position: relative;
+  background-color: var(--white);
+  border-radius: 50px;
+}
+
+.inputPassContainer input {
+  font-size: 16px;
+  color: var(--gray-v6);
+  border-radius: inherit;
+  background-color: inherit;
+  font-weight: 400;
+}
+
+/* .inputBox[color-variant="border"] {
+  border-radius: 5px;
+  border: 1px solid #d4d4d8;
+  background: #fff;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+} */
+
+.inputPassContainer input:disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.inputPassContainer input::placeholder {
+  /* color: #ccc; */
+  color: var(--placeholder) !important;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: capitalize;
+  font-family: var(--inter);
+  font-weight: 400;
+}
+
+.inputPassContainer .passwordIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(-50%);
+  color: #cacaca;
+}
+
+.errorText {
+  color: var(--error-v1);
+}
+
+.leftIconBox {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  bottom: 45%;
+  transform: translateY(-50%);
+  height: max-content;
+}
+.rightIconBox {
+  position: absolute;
+  /* left: 97%;
+   */
+  right: 10px;
+  top: 50%;
+  bottom: 45%;
+  transform: translateY(-50%);
+  height: max-content;
+}
+
+.inputBox ::-webkit-outer-spin-button,
+.inputBox ::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputBox:focus {
+  outline: none;
+}
+/*  Firefox  */
+.inputBox[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@media (max-width: 991px) {
+  .labelText {
+    font-size: 17px;
+  }
+  .inputPassContainer input {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .labelText {
+    font-size: 16px;
+  }
+  .inputPassContainer input {
+    font-size: 14px;
+  }
+  .inputBox {
+    padding: 15px 10px;
+  }
+}
