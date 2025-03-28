@@ -1,0 +1,20 @@
+.header{
+    padding:0px 20px;
+    height: 80px;
+    border-bottom: 1px solid var(--gray-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    position: relative;
+    width: 121px;
+    height: 39px;
+}
+
+.logoParent{
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

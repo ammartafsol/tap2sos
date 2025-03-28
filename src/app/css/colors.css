@@ -2,10 +2,14 @@
 
 
 :root {
-    --gray-300: #D1D5DB;
+    --gray-color: #b6b6b6;
+    --light-gray: #E5E7EB;
+    --light-gray-100: #F3F4F6;
     --royal-navy-blue: #1A498B;
     --deep-ocean-blue: #1A488D;
     --fiery-red: #FF4242;
     --white-color:#fff;
+    --black-color:#000;
+    --shadow-color:#e5e7eb;
   }
 

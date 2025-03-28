@@ -1,0 +1,21 @@
+.tableBodyContainer {
+  width: 100%;
+  overflow: auto;
+}
+.tableBodyContainer table {
+  width: 100%;
+}
+
+.tableBodyContainer td {
+  width: 20%;
+  padding-block: 15px;
+  word-break: break-word;
+  white-space: pre-line;
+  border-bottom: 1px solid var(--gray-neutral-color);
+  padding-right: 10px;
+}
+
+.tableBodyContainer td:first-child {
+  padding-right: 0;
+  padding-left: 10px;
+}

@@ -1,0 +1,47 @@
+
+.profile{
+    position: relative;
+    width:34px;
+    height: 34px;
+    border-radius: 50%;
+}
+.profileImage{
+    border-radius: 50%;
+}
+.arrow{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.profileDetails{
+    display: flex;
+    flex-direction: column;
+}
+.profileParent{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.profileDetails h4{
+    margin-bottom: 0px;
+    font-size: 12px;
+    font-weight: 500;
+line-height: 13.396px;
+}
+.profileDetails p{
+    margin-bottom: 0px;
+    color: var(--black-color);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 19.137px; /* 159.475% */
+opacity: 0.5;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}

@@ -1,4 +1,4 @@
-import {Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/globals.css";
 import "./css/typography.css";
@@ -7,7 +7,6 @@ import "./css/colors.css";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "@/store/auth-provider";
 import RootApis from "@/component/organisms/RootApis";
-
 
 const inter = Inter({
   variable: "--font-inter",
