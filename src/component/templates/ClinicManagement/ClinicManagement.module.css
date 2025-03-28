@@ -1,0 +1,30 @@
+
+
+.rightTop{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.btn{
+    width: fit-content;
+}
+.user{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.userTable{
+    margin-top: 20px;
+    border-top: 1px solid var(--light-gray);
+    border-left:1px solid var(--light-gray);
+    border-right: 1px solid var(--light-gray);
+    border-bottom: 1px solid none;
+    padding: 15px 10px 15px 15px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.containerClass{
+    margin-top: -2px !important;
+}
