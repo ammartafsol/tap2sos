@@ -1,0 +1,27 @@
+
+
+.signInMain{
+    width: 100% !important;
+    margin: auto;
+    padding: 100px;
+}
+
+
+
+.forgetPassword{
+    display: flex;
+    justify-content: flex-end;
+    color:var(--deep-ocean-blue);
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.signIn{
+    width: 100% !important;
+}
+
+
+
+

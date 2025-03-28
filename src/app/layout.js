@@ -1,17 +1,16 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import {Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/globals.css";
 import "./css/typography.css";
 import "./css/colors.css";
 
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "@/store/auth-provider";
+import RootApis from "@/component/organisms/RootApis";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -23,8 +22,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body className={`${inter.variable}`}>
+        <ToastContainer />
+        <AuthProvider>
+          <RootApis />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

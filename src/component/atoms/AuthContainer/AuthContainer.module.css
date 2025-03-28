@@ -1,0 +1,22 @@
+.AuthContainer{
+       background-color: #F2F2F7;
+    height: 100vh;
+    width: 100vw !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+}
+
+
+.AuthContainer::-webkit-scrollbar{
+    width: 5px;
+  }
+  
+  .AuthContainer::-webkit-scrollbar-thumb {
+    background-color: var(--light-purpule);
+    border-radius: 10px;
+  }
+  .AuthContainer::-webkit-scrollbar-track {
+    background-color:var(--text-gray-h5);
+  }

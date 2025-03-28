@@ -1,5 +1,4 @@
 .mainContainer {
-  min-height: 80vh;
   padding: 20px;
   border-radius: 20px;
   border: 1px solid var(--primary);
