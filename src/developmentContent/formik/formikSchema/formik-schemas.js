@@ -19,3 +19,12 @@ export const ResetPasswordSchema = Yup.object({
     .oneOf([Yup.ref("newPassword")], "Passwords must match")
     .required("Confirm password is required"),
 });
+
+
+export const profileSchema =  Yup.object({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  location: Yup.string().required("Location is required"),
+  description: Yup.string().trim().required("Description is required"),
+  // phoneNumber: Yup.number("Invalid").required("Phone number name is required"),
+})

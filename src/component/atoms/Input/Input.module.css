@@ -35,7 +35,7 @@ margin-bottom: 8px;
 .inputBox {
   font-family: var(--inter);
   color: var(--black-color);
-  border: 1px solid var(--gray-300);
+  border: 1px solid var(--light-gray);
   letter-spacing: 1.4px;
   background-color: inherit;
   padding: 20px 13px;

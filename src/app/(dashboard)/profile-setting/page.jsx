@@ -1,8 +1,11 @@
+import ProfileTemplate from '@/component/templates/Profile'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>page</div>
+    <>
+    <ProfileTemplate />
+    </>
   )
 }
 
