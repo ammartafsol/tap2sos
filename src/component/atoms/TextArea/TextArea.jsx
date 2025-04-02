@@ -33,13 +33,16 @@ export function TextArea({
       <textarea
         placeholder={placeholder}
         value={value}
-        style={{ ...customStyle }}
+        style={{
+          ...customStyle,
+        }}
         onChange={(e) => {
           setter(e.target.value);
         }}
         // onBlur={() => {
         //   setter(value?.trim());
         // }}
+
         className={className}
         rows={rows}
         disabled={disabled}

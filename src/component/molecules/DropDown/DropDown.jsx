@@ -135,12 +135,12 @@ const DropDown = ({
         ? "var(--dashboard-input-bg-clr)"
         : "var(--white-clr)",
       borderRadius,
-      color: "var(--input-border-color)",
+      color: "var(--input-border-          color)",
       boxShadow: "none",
       fontFamily: "var(--poppins)",
       fontSize: 16,
       cursor: "pointer",
-      border: `1px solid ${errorText ? "red" : "#D1D5DB"}`,
+      border: `1px solid ${errorText ? "red" : "var(--field-border-color)"}`,
       ...customStyle,
       ":hover": {
         ...base[":hover"],

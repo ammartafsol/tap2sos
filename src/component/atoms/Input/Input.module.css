@@ -12,13 +12,13 @@
 
 .labelText {
   color: var(--secondary-text-black);
-font-family: var(--plusJakartaSans);
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 20px; 
-letter-spacing: -0.14px;
-margin-bottom: 8px;
+  font-family: var(--plusJakartaSans);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.14px;
+  margin-bottom: 8px;
 }
 
 .onTopLabel {
@@ -35,7 +35,8 @@ margin-bottom: 8px;
 .inputBox {
   font-family: var(--inter);
   color: var(--black-color);
-  border: 1px solid var(--light-gray);
+  /* border: 1px solid var(--light-gray); */
+  border: 1px solid var(--field-border-color);
   letter-spacing: 1.4px;
   background-color: inherit;
   padding: 20px 13px;
@@ -47,7 +48,7 @@ margin-bottom: 8px;
   /* border: 1px solid var(--border-color); */
 }
 
-.paddingLeft{
+.paddingLeft {
   padding-left: 50px;
 }
 .inputBox::placeholder {
@@ -114,7 +115,7 @@ margin-bottom: 8px;
   cursor: pointer;
 }
 
-.passwordIcon{
+.passwordIcon {
   bottom: 0 !important;
 }
 
@@ -164,6 +165,3 @@ margin-bottom: 8px;
     font-size: var(--fs-base);
   }
 }
-
-
-

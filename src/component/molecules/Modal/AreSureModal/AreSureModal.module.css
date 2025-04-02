@@ -1,0 +1,19 @@
+.heading {
+    margin: 20px 0 10px 0;
+  }
+  
+  .parentBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+  .cancel {
+    color: var(--primary-bg) !important;
+    border: 1px solid var(--primary-bg) !important;
+    background-color: transparent !important;
+  }
+
+  .send{
+    width: 100px;
+  }

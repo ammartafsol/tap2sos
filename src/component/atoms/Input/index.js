@@ -41,7 +41,6 @@ export const Input = ({
     ...(leftIcon && { paddingLeft: "50px" }),
   };
 
-
   return (
     <div
       className={`${[
@@ -113,7 +112,10 @@ export const Input = ({
 
         {/* Password Toggle Icons - Removed "setter" Prop */}
         {type === "password" && (
-          <span onClick={() => setPassToggle(!passToggle)} className={classes.passwordIcon}>
+          <span
+            onClick={() => setPassToggle(!passToggle)}
+            className={classes.passwordIcon}
+          >
             {passToggle ? (
               <AiOutlineEye fontSize={25} />
             ) : (
@@ -122,7 +124,9 @@ export const Input = ({
           </span>
         )}
       </div>
-      {errorText && <p className={`${classes.mt2} ${classes.errorText}`}>{errorText}</p>}
+      {errorText && (
+        <p className={`${classes.mt2} ${classes.errorText}`}>{errorText}</p>
+      )}
     </div>
   );
 };
