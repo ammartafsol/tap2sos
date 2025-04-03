@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 import classes from "./signIn.module.css";
 import { Input } from "@/component/atoms/Input";
 import { LOGIN_FORM_VALUES } from "@/developmentContent/formik/formikInitialValues/form-initial-values";
-import Image from "next/image";
 import { LoginSchema } from "@/developmentContent/formik/formikSchema/formik-schemas";
 
 const SingInTemplate = () => {
@@ -35,36 +34,28 @@ const SingInTemplate = () => {
   });
 
   // handleSubmit
-  const handleSubmit = async (params) => {
+  const handleSubmit = async (values) => {
     setLoading("loading");
-    const response = await Post({ route: "auth/login", data: params });
+  
+    const obj = {
+      email: values?.email,
+      password: values?.password,
+    };
+  
+    console.log("Submitting login request...");
+    const response = await Post({ route: "admin/login", data: obj });  
     if (response) {
-      const data = response?.data?.data;
-      const role = data?.user?.role?.at(0);
-      const userForCookie = {
-        role,
-        _id: data?.user?._id,
-        email: data?.user?.email,
-        isVerified: data?.user?.isVerified,
-      };
-      Cookies.set("_xpdx_u", JSON.stringify(userForCookie), { expires: 90 });
+      const data = response?.response?.data;
+      console.log("data",data);
+      Cookies.set("_xpdx_u", JSON.stringify(data?.user), { expires: 90 });
       Cookies.set("_xpdx", handleEncrypt(data?.token), { expires: 90 });
+      dispatch(saveLoginUserData(data));
+      router.push('/')
+    } 
+    setLoading(""); // Handle failure case
 
-      if (role === "freelancer") {
-        redirectRoute = "/service-provider";
-        const user = data?.user;
-      }
-      dispatch(saveLoginUserData(response?.data));
-      if (!data?.user?.isVerified) {
-        Cookies.set("_xpdx_ver", "_xpdx_ver");
-        router.push("/auth/otp");
-      } else {
-        router.push(redirectRoute);
-      }
-    }
-
-    setLoading("");
   };
+  
 
   return (
     <div className={classes.mainParent}>

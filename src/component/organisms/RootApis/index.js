@@ -17,9 +17,9 @@ const RootApis = () => {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return null;
 };
