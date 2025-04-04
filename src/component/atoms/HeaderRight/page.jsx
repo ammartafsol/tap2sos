@@ -13,7 +13,7 @@ const HeaderRight = () => {
           <div className={classes?.profile}>
             <Image
               className={classes?.profileImage}
-              src={"/images/cms-images/svgs/Avatar.svg"}
+              src={"/Images/cms-images/svgs/Avatar.svg"}
               fill
               alt="images"
             />

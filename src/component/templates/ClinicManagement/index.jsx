@@ -36,7 +36,7 @@ const ClinicManagement = () => {
       limit: RECORDS_LIMIT,
       search: debouceSearch,
     }
-    const queryString = new URLSearchParams(query).toString();
+    const queryString = new URLSearchParams(query).toString().replace(/\+/g, '%20');
     const response = await Get({route:`admin/users/all?${queryString}`});
     setLoading('');
     if(response.status === 200){

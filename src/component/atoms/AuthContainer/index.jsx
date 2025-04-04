@@ -8,7 +8,7 @@ const AuthContainer = ({ children }) => {
     <div className={classes.AuthContainer}>
       <BorderWrapper containerClass={"authCard"}>
         <div className={"logo"}>
-          <Image src={"/images/app-images/svgs/logo.svg"} fill alt="logo" />
+          <Image src={"/Images/app-images/svgs/logo.svg"} fill alt="logo" />
         </div>
         {children}
       </BorderWrapper>
