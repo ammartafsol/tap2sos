@@ -42,10 +42,9 @@ const SingInTemplate = () => {
       password: values?.password,
     };
   
-    console.log("Submitting login request...");
     const response = await Post({ route: "admin/login", data: obj });  
-    if (response.status === 200) {
-      const data = response?.data;
+    if (response?.data?.status === 200) {
+      const data = response?.data?.data;
       console.log("data",data);
       Cookies.set("_xpdx_u", JSON.stringify(data?.user), { expires: 90 });
       Cookies.set("_xpdx", handleEncrypt(data?.token), { expires: 90 });

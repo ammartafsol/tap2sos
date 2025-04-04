@@ -35,7 +35,7 @@ const DashboardTemplate = () => {
     };
     const queryString = new URLSearchParams(query).toString();
     const response = await Get({ route: `admin/dashboard?${queryString}` });
-    const responseData = response?.data?.data;
+    const responseData = response?.data?.data?.data;
     if (response) {
       const graphMonths = responseData?.graph?.map((item) => item.monthName);
       const graphCount = responseData?.graph?.map((item) => item.count);
