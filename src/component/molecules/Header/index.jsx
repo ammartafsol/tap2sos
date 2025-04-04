@@ -10,7 +10,7 @@ const Header = () => {
     <div className={classes?.header}>
       <div className={classes?.logoParent}>
         <div className={classes?.logo}>
-          <Image fill src={"images/app-images/svgs/logo.svg"} alt="logo" />
+          <Image fill src={"Images/app-images/svgs/logo.svg"} alt="logo" />
         </div>
         <FaBars fontSize={18} />
       </div>
