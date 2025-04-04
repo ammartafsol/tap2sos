@@ -5,18 +5,32 @@ import SidebarItem from "@/component/atoms/SidebarItem";
 import { sidebarData } from "@/developmentContent/developmentData/sidebarData";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { signOutRequest } from "@/store/auth/authSlice";
 
 const Sidebar = () => {
-    const router = useRouter();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const signout = () => {
+    Cookies.remove("_xpdx_u");
+    Cookies.remove("_xpdx");
+    router.push("/auth/sign-in");
+    dispatch(signOutRequest());
+  };
   return (
     <div className={classes?.Sidebar}>
-        <div className={classes?.sidebarItem}>
-      {sidebarData?.map((item) => {
-        return <SidebarItem item={item} key={item._id} />;
-      })}
+      <div className={classes?.sidebarItem}>
+        {sidebarData?.map((item) => {
+          return <SidebarItem item={item} key={item._id} />;
+        })}
       </div>
-      <div onClick={()=>{router.push('auth/sign-in')}} className={classes?.logout}>
+      <div
+        onClick={() => {
+          signout()
+        }}
+        className={classes?.logout}
+      >
         <IoLogOutOutline className={classes?.logoutIcon} />
         <p>Logout</p>
       </div>

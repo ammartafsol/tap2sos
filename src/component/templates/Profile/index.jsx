@@ -86,6 +86,7 @@ const ProfileTemplate = () => {
 
 
   return (
+    <div className="main">
     <BorderWrapper>
       <div className={classes.wrapper}>
         <div className={classes.profile}>
@@ -171,6 +172,7 @@ const ProfileTemplate = () => {
         </div>
       </div>
     </BorderWrapper>
+    </div>
   );
 };
 

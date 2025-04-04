@@ -82,7 +82,7 @@ const DashboardTemplate = () => {
   }
 
   return (
-    <div className={classes?.main}>
+    <div className={"main"}>
       <div className="h1">Dashboard</div>
 
       <Row className={classes?.statesMain}>

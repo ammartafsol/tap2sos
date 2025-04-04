@@ -55,7 +55,7 @@ const ClinicManagement = () => {
 
   return (
     <>
-      <div>
+      <div className={'main'}>
         <div className={classes?.user}>
           <div className="h1">Clinic Management</div>
           <div className={classes?.rightTop}>
