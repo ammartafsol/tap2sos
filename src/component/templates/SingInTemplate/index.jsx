@@ -44,15 +44,15 @@ const SingInTemplate = () => {
   
     console.log("Submitting login request...");
     const response = await Post({ route: "admin/login", data: obj });  
-    if (response) {
-      const data = response?.response?.data;
+    if (response.status === 200) {
+      const data = response?.data;
       console.log("data",data);
       Cookies.set("_xpdx_u", JSON.stringify(data?.user), { expires: 90 });
       Cookies.set("_xpdx", handleEncrypt(data?.token), { expires: 90 });
       dispatch(saveLoginUserData(data));
       router.push('/')
     } 
-    setLoading(""); // Handle failure case
+    setLoading("");
 
   };
   

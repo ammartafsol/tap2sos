@@ -142,3 +142,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.layout {
+  padding-bottom: 20px !important;
+  height: 100% !important;
+  position: relative;
+}
+
+.padding{
+  padding-bottom: 40px;
+}

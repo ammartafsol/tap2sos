@@ -42,6 +42,9 @@ const authSlice = createSlice({
     ToggleDrawer(state, action) {
       state.isOpen = action.payload;
     },
+    saveToken(state,action){
+      state.accessToken = action.payload
+    }
   },
 });
 
@@ -51,6 +54,7 @@ export const {
   signOutRequest,
   ToggleDrawer,
   updateUser,
+  saveToken,
   wishlist,
 } = authSlice.actions;
 

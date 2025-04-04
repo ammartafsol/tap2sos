@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { IoMdAdd } from "react-icons/io";
 import classes from "./Profile.module.css";
 import { TextArea } from "@/component/atoms/TextArea/TextArea";
 import { profileSchema } from "@/developmentContent/formik/formikSchema/formik-schemas";
@@ -42,9 +43,6 @@ const ProfileTemplate = () => {
     initialValues: {
       firstName: "",
       lastName: "",
-      location: "",
-      phoneNumber: "",
-      description: "",
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
@@ -56,19 +54,14 @@ const ProfileTemplate = () => {
     const obj = {
       firstName: values.firstName,
       lastName: values.lastName,
-      location: values.location,
-      // phoneNumber: values.phoneNumber,  // Commented out for now
-      photo: file ?? user?.photo,
-      description: values.description,
+      // photo: file ?? user?.photo,
     };
     setLoading("loading");
-    const formdata = CreateFormData(obj);
     const response = await Patch({
-      route: "users/update/me",
-      data: formdata,
-      isFormData: true,
+      route: "users/updateMe",
+      data: obj,
     });
-    if (response) {
+    if (response.status === 200) {
       dispatch(updateUser(response?.data?.data?.user));
       RenderToast({
         type: "success",
@@ -83,32 +76,30 @@ const ProfileTemplate = () => {
       profileFormik.setValues({
         firstName: user?.firstName || "",
         lastName: user?.lastName || "",
-        location: user?.location || "",
-        phoneNumber: user?.phoneNumber || "",
-        description: user?.description || "",
-      });
+        email:user?.email || "",
+          });
       const userImage = mediaUrl(user?.photo);
       setProfileImage(userImage);
       setImage(userImage);
     }
   }, [user]);
 
+
   return (
     <BorderWrapper>
       <div className={classes.wrapper}>
         <div className={classes.profile}>
+        {/* // image ||
+        // profileImage || */}
           <Image
             src={
-              image ||
-              profileImage ||
-              "/images/app-images/web-images/avatar.png"
-            }
+              "/Images/app-images/web-image/avatar.png"}
             alt="profile"
             fill
             objectFit="cover"
             className={classes?.profileImage}
           />
-          <div className={classes.CTA}>
+          {/* <div className={classes.CTA}>
             <input
               type="file"
               accept="image/*"
@@ -117,13 +108,11 @@ const ProfileTemplate = () => {
               onChange={handleImageChange}
             />
             <label htmlFor="fileInput">
-              <Image
-                src={"/images/app-images/svg/CTA.svg"}
-                alt="select profile"
-                fill
-              />
+              <div className={classes?.addIcon}>
+                <IoMdAdd color="var(--white-color)" size={25} />
+              </div>
             </label>
-          </div>
+          </div> */}
         </div>
         <Row>
           <Col xs="12">
@@ -157,32 +146,17 @@ const ProfileTemplate = () => {
           </Col>
           <Col xs="12">
             <Input
-              label={"Location"}
-              value={profileFormik.values.location}
-              setter={(e) => {
-                profileFormik.setFieldValue("location", e);
-              }}
-              errorText={
-                profileFormik.touched.location && profileFormik.errors.location
-              }
+              label={"Email"}
+              value={profileFormik.values.email}
               type={"text"}
-              placeholder={"Enter your Location"}
-            />
-          </Col>
-          <Col xs="12">
-            <TextArea
-              label={"Description"}
-              placeholder={"Enter your Description"}
-              value={profileFormik.values.description}
-              setter={(e) => {
-                profileFormik.setFieldValue("description", e);
-              }}
+              placeholder={"Enter your Email"}
+              disabled={true}
             />
           </Col>
         </Row>
         <div
           onClick={() => {
-            router.push("/customer/updatePassword");
+            router.push("/updatePassword");
           }}
           className={mergeClass("mt-3", "textBlodLeft")}
         >

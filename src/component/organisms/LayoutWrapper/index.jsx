@@ -13,7 +13,7 @@ const LayoutWrapper = ({ children }) => {
         <div className={classes?.sidebar}>
           <Sidebar />
         </div>
-        <div className={`${"fullHeight"} ${classes.children}`}>{children}</div>
+        <div className={`${"fullHeight padding"} ${classes.children}`}>{children}</div>
         </div>
       </div>
     </>

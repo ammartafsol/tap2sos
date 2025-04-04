@@ -50,6 +50,7 @@ let handleRequest = async ({
   showAlert = true,
   isFormData = false,
 }) => {
+
   try {
     const url = baseURL(route);
     const token = Cookies.get("_xpdx");
@@ -76,8 +77,9 @@ let handleRequest = async ({
       headers: _headers,
     });
 
-    return { response, error: null };
-  } catch (error) {
+    return response;
+  }
+ catch (error) {
     const errorMessage = getErrorMsg(error);
     console.log("🚀 ~ errorMessage:", errorMessage);
 
@@ -98,7 +100,6 @@ let handleRequest = async ({
         dispatch(signOutRequest());
         Cookies.remove("_xpdx");
         Cookies.remove("_xpdx_rf");
-        typeof window !== "undefined" && window.location === "/login";
       }
     }
 

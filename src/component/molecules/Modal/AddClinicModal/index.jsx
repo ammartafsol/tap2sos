@@ -1,3 +1,4 @@
+"use client";
 import classes from "./AddClinicModal.module.css";
 import { useFormik } from "formik";
 import ModalSkeleton from "@/component/atoms/ModalSkeleton/ModalSkeleton";
@@ -6,39 +7,54 @@ import Button from "@/component/atoms/Button";
 import { addClinicSchema } from "@/schema/addClinicSchema";
 import { Post } from "@/interceptor/axios-functions";
 import RenderToast from "@/component/atoms/RenderToast";
+import { useState } from "react";
 
-const AddClinicModal = ({ show, setShow }) => {
+const AddClinicModal = ({ show, setShow, getData, setSearch }) => {
+  const [loading, setLoading] = useState("");
+
   const addClinicFormik = useFormik({
     initialValues: {
       clinicName: "",
       email: "",
       phoneNumber: "",
-      password: "",
-      confirmPassword: "",
+      longitude:67.0726,
+      latitude: 24.8994,
     },
     validationSchema: addClinicSchema,
     onSubmit: (values) => {
-      handleSubmit(values)
+      handleSubmit(values);
     },
   });
 
-  const handleSubmit = async (values)=>{
-    const response = await Post({route:'',data:values});
-    if(response){
-      RenderToast({type:"success",message:"Clinic added successfully"})
+  const handleSubmit = async (values) => {
+    setLoading("loading");
+    const response = await Post({ route: "admin/create-clinic", data: values });
+    setLoading("");
+    if (response.status === 200) {
+      RenderToast({ type: "success", message: "Clinic added successfully" });
+      setShow(false);
+      setSearch("");
+      getData();
+      addClinicFormik.resetForm();
     }
-  }
+  };
 
   return (
     <ModalSkeleton header={"Add Clinic"} show={show} setShow={setShow}>
-      <form onSubmit={addClinicFormik.handleSubmit} className={classes.addFormField}>
+      <form
+        onSubmit={addClinicFormik.handleSubmit}
+        className={classes.addFormField}
+      >
         <Input
           label="Clinic Name"
           placeholder="Enter clinic name"
           name="clinicName"
           value={addClinicFormik.values.clinicName}
-          setter={(e)=>addClinicFormik.setFieldValue('clinicName',e)}
-          errorText={addClinicFormik.touched.clinicName && addClinicFormik.errors.clinicName}
+          setter={(e) => addClinicFormik.setFieldValue("clinicName", e)}
+          errorText={
+            addClinicFormik.touched.clinicName &&
+            addClinicFormik.errors.clinicName
+          }
         />
 
         <Input
@@ -47,8 +63,10 @@ const AddClinicModal = ({ show, setShow }) => {
           name="email"
           type="email"
           value={addClinicFormik.values.email}
-          setter={(e)=>addClinicFormik.setFieldValue('email',e)}
-          errorText={addClinicFormik.touched.email && addClinicFormik.errors.email}
+          setter={(e) => addClinicFormik.setFieldValue("email", e)}
+          errorText={
+            addClinicFormik.touched.email && addClinicFormik.errors.email
+          }
         />
 
         <Input
@@ -57,33 +75,23 @@ const AddClinicModal = ({ show, setShow }) => {
           name="phoneNumber"
           value={addClinicFormik.values.phoneNumber}
           type={"number"}
-          setter={(e)=>addClinicFormik.setFieldValue('phoneNumber',e)}
-          errorText={addClinicFormik.touched.phoneNumber && addClinicFormik.errors.phoneNumber}
+          setter={(e) => addClinicFormik.setFieldValue("phoneNumber", e)}
+          errorText={
+            addClinicFormik.touched.phoneNumber &&
+            addClinicFormik.errors.phoneNumber
+          }
         />
-
-        <Input
-          label="Password"
-          placeholder="Enter password"
-          name="password"
-          type="password"
-          value={addClinicFormik.values.password}
-          setter={(e)=>addClinicFormik.setFieldValue('password',e)}
-          errorText={addClinicFormik.touched.password && addClinicFormik.errors.password}
-        />
-
-        <Input
-          label="Confirm Password"
-          placeholder="Re-enter password"
-          name="confirmPassword"
-          type="password"
-          value={addClinicFormik.values.confirmPassword}
-          setter={(e)=>addClinicFormik.setFieldValue('confirmPassword',e)}
-          errorText={addClinicFormik.touched.confirmPassword && addClinicFormik.errors.confirmPassword}
-        />
-
         <div className={classes.buttonDiv}>
-          <Button label="Cancel" variant="outlined" onClick={() => setShow(false)} />
-          <Button label="Add Clinic" type="submit" />
+          <Button
+            label="Cancel"
+            variant="outlined"
+            onClick={() => setShow(false)}
+          />
+          <Button
+            disabled={loading === "loading"}
+            label={`${loading === "loading" ? "loading..." : "Add Clinic"}`}
+            type="submit"
+          />
         </div>
       </form>
     </ModalSkeleton>

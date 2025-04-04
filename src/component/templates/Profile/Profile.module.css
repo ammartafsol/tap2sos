@@ -21,3 +21,13 @@
     bottom: 10px;
     cursor: pointer;
 }
+
+.addIcon{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:var(--royal-navy-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

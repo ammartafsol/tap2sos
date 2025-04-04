@@ -24,7 +24,13 @@ export const ResetPasswordSchema = Yup.object({
 export const profileSchema =  Yup.object({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Last name is required"),
-  location: Yup.string().required("Location is required"),
-  description: Yup.string().trim().required("Description is required"),
   // phoneNumber: Yup.number("Invalid").required("Phone number name is required"),
 })
+
+export const updatePasswordSchema = Yup.object({
+  oldPassword: Yup.string().required("Old password is required"),
+  newPassword: Yup.string().required("New password is required"),
+  reEnterNewPassword: Yup.string()
+    .required("Re-enter new password is required")
+    .oneOf([Yup.ref('newPassword'), null], "Passwords must match"), 
+});
