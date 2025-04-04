@@ -35,9 +35,10 @@ const UpdatePasswordTemplate = () => {
     };
     const response = await Patch({ route: "users/updateMyPassword", data: obj });
     setLoading("");
-    if (response.status === 200) {
-      saveToken(response?.data?.data?.token);
-      Cookies.set("_xpdx", handleEncrypt(response?.data?.data?.token));
+    if (response?.data.status === 200) {
+      console.log("token",response?.data?.data?.data?.token);
+      saveToken(response?.data?.data?.data?.token);
+      Cookies.set("_xpdx", handleEncrypt(response?.data?.data?.data?.token));
       RenderToast({
         type: "success",
         message: "Password Updated Successfully",

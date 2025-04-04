@@ -50,7 +50,6 @@ let handleRequest = async ({
   showAlert = true,
   isFormData = false,
 }) => {
-
   try {
     const url = baseURL(route);
     const token = Cookies.get("_xpdx");
@@ -70,18 +69,16 @@ let handleRequest = async ({
       ...headers,
     };
 
-    const response = await axios({
+    const axiosResponse = await axios({
       method,
       url,
       data,
       headers: _headers,
     });
 
-    return response;
-  }
- catch (error) {
+    return { data: axiosResponse, error: null }; 
+  } catch (error) {
     const errorMessage = getErrorMsg(error);
-    console.log("🚀 ~ errorMessage:", errorMessage);
 
     if (showAlert) {
       RenderToast({
@@ -93,17 +90,21 @@ let handleRequest = async ({
 
     if (error?.response?.status === 401) {
       try {
-        const newAccessToken = await refreshAccessToken(); // Attempt to refresh token
-        headers.Authorization = `Bearer ${newAccessToken}`; // Update headers with new token
-        return await axios({ method, url, data, headers }); // Retry the request
+        const newAccessToken = await refreshAccessToken();
+        headers.Authorization = `Bearer ${newAccessToken}`;
+        const retryResponse = await axios({ method, url: baseURL(route), data, headers });
+        return { data: retryResponse.data, error: null }; // ✅ still return .data
       } catch (refreshError) {
-        dispatch(signOutRequest());
+        dispatch?.(signOutRequest?.());
         Cookies.remove("_xpdx");
         Cookies.remove("_xpdx_rf");
       }
     }
 
-    return { error, response: null };
+    return {
+      data: error?.response?.data || null, // ✅ match success structure
+      error: error,
+    };
   }
 };
 

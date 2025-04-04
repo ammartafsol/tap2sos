@@ -39,11 +39,12 @@ const ClinicManagement = () => {
     const queryString = new URLSearchParams(query).toString().replace(/\+/g, '%20');
     const response = await Get({route:`admin/users/all?${queryString}`});
     setLoading('');
-    if(response.status === 200){
-      setData(response?.data?.data);
-      setTotalRecords(response?.data?.totalRecords);
+    if(response?.data.status === 200){
+      setData(response?.data?.data?.data);
+      setTotalRecords(response?.data?.data?.totalRecords);
     }
   }
+
 
   useEffect(()=>{
     getData();

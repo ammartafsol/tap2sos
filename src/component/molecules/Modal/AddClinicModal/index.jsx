@@ -30,7 +30,7 @@ const AddClinicModal = ({ show, setShow, getData, setSearch }) => {
     setLoading("loading");
     const response = await Post({ route: "admin/create-clinic", data: values });
     setLoading("");
-    if (response.status === 200) {
+    if (response?.data?.status === 200) {
       RenderToast({ type: "success", message: "Clinic added successfully" });
       setShow(false);
       setSearch("");

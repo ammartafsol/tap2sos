@@ -61,8 +61,8 @@ const ProfileTemplate = () => {
       route: "users/updateMe",
       data: obj,
     });
-    if (response.status === 200) {
-      dispatch(updateUser(response?.data?.data?.user));
+    if (response?.data?.status === 200) {
+      dispatch(updateUser(response?.data?.data?.data?.user));
       RenderToast({
         type: "success",
         message: "Profile Updated Successfully",
