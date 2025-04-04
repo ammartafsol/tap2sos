@@ -11,7 +11,7 @@ const StatesCard = ({ item }) => {
       </div>
       <div className={classes?.statesDetails}>
         <h5>{item?.title}</h5>
-        <p>522</p>
+        <p>{item?.count}</p>
       </div>
     </div>
   );

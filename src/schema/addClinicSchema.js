@@ -1,21 +1,20 @@
 import * as Yup from "yup";
 
 export const addClinicSchema = Yup.object().shape({
-  fullName: Yup.string().required("Full name is required"),
+  clinicName: Yup.string().required("Clinic name is required"),
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
-  medicalCondition: Yup.string().required("Medical condition is required"),
-  useFullInfo: Yup.string().required("Useful information is required"),
-  organDonor: Yup.string().required("Please select if you are an organ donor"),
-  bloodType: Yup.string().required("Please select your blood type"),
-  sex: Yup.string().required("Please select your sex"),
-  date: Yup.date().required("Date of birth is required").nullable(),
-  doctorFullName: Yup.string().required("Doctor's full name is required"),
-  contact: Yup.string()
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm password is required"),
+  phoneNumber: Yup.string()
     .matches(
-      /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-      "Invalid phone number"
+      /^\+?[0-9]{7,15}$/,
+      "Invalid phone number format"
     )
-    .required("Doctor's phone number is required"),
+    .required("Phone number is required"),
 });

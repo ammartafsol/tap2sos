@@ -3,6 +3,7 @@ import classes from "./AppTable.module.css";
 import {  getNestedObject, mergeClass } from "@/resources/utils/helper";
 import { RECORDS_LIMIT } from "@/const";
 import NoDataFound from "@/component/atoms/NoDataFound/NoDataFound";
+import Pagination from "@/component/molecules/PaginationComponent";
 // import { NoData } from "@/component/atoms/NoData/NoData";
 
 export default function AppTable({
@@ -94,6 +95,14 @@ export default function AppTable({
           </div>
         )}
       </div>
+      {hasPagination && (
+        <Pagination
+          {...props}
+          // totalRecords={totalRecords}
+          // currentPage={pages}
+          // setCurrentPage={setPages}
+        />
+      )}
     </>
   );
 }

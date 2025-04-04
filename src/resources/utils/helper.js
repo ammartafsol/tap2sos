@@ -389,3 +389,16 @@ export const capitalizeFirstLetter = (l) => {
   return l.charAt(0).toUpperCase() + l.slice(1);
 };
 
+
+
+export const generateYearOptions = () => {
+  const currentYear = new Date().getFullYear();
+  const startYear = 2025;
+
+  const years = [];
+  for (let year = startYear; year <= currentYear; year++) {
+    years.push({ label: `${year}`, value: `${year}` });
+  }
+
+  return years;
+};

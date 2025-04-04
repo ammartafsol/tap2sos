@@ -84,6 +84,7 @@ const DropDown = ({
   variant = "",
   customContainerStyle,
   inputClass,
+  containerClass,
   iconClass,
   errorText,
   imageClass,
@@ -173,7 +174,7 @@ const DropDown = ({
   };
 
   return (
-    <div className={`${classes.Container}`} data-variant={variant}>
+    <div className={`${classes.Container} ${containerClass}`} data-variant={variant}>
       {label && (
         <label
           htmlFor={`dropdown${label}`}
