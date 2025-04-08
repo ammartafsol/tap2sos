@@ -7,9 +7,9 @@ import Button from "@/component/atoms/Button";
 import { addClinicSchema } from "@/schema/addClinicSchema";
 import { Post } from "@/interceptor/axios-functions";
 import RenderToast from "@/component/atoms/RenderToast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const AddClinicModal = ({ show, setShow, getData, setSearch }) => {
+const AddClinicModal = ({ show, setShow, getData, setSearch,editData,isEditData,setIsEdit,setIsEditData,setEditData }) => {
   const [loading, setLoading] = useState("");
 
   const addClinicFormik = useFormik({
@@ -28,19 +28,35 @@ const AddClinicModal = ({ show, setShow, getData, setSearch }) => {
 
   const handleSubmit = async (values) => {
     setLoading("loading");
-    const response = await Post({ route: "admin/create-clinic", data: values });
+    const response = await Post({ route: isEditData?"":'"admin/create-clinic"', data: values });
     setLoading("");
     if (response?.data?.status === 200) {
       RenderToast({ type: "success", message: "Clinic added successfully" });
       setShow(false);
       setSearch("");
       getData();
+      setIsEdit(false);
+      setEditData(false);
       addClinicFormik.resetForm();
     }
   };
 
+  const onCancel = () => {
+    setShow(false);
+    setIsEdit(false);
+    addClinicFormik.resetForm();
+  }
+
+  useEffect(()=>{
+    if(isEditData){
+      addClinicFormik.setFieldValue("clinicName",editData?.clinicName);
+      addClinicFormik.setFieldValue("email",editData?.email);
+      addClinicFormik.setFieldValue("phoneNumber",editData?.phoneNumber);
+    }
+  },[]);
+
   return (
-    <ModalSkeleton header={"Add Clinic"} show={show} setShow={setShow}>
+    <ModalSkeleton header={`${isEditData?"Edit":"Add"} Clinic`} show={show} setShow={setShow}>
       <form
         onSubmit={addClinicFormik.handleSubmit}
         className={classes.addFormField}
@@ -85,11 +101,11 @@ const AddClinicModal = ({ show, setShow, getData, setSearch }) => {
           <Button
             label="Cancel"
             variant="outlined"
-            onClick={() => setShow(false)}
+            onClick={onCancel}
           />
           <Button
             disabled={loading === "loading"}
-            label={`${loading === "loading" ? "loading..." : "Add Clinic"}`}
+            label={`${loading === "loading" ? "loading..." : `${isEditData?"Edit":"Add"} Clinic`}`}
             type="submit"
           />
         </div>

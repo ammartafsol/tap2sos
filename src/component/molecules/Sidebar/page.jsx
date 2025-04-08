@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { signOutRequest } from "@/store/auth/authSlice";
 
-const Sidebar = () => {
+const Sidebar = ({setIsCollapsed}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const signout = () => {

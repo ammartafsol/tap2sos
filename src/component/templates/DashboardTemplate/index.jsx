@@ -41,17 +41,17 @@ const DashboardTemplate = () => {
       const graphCount = responseData?.graph?.map((item) => item.count);
       const statesData = [
         {
-          title: "Total Clinic",
+          title: "Total Clinics",
           count: responseData?.clinicsCount,
           icon: LuHospital,
         },
         {
-          title: "Total Patient",
+          title: "Total Patients",
           count: responseData?.patientsCount,
           icon: LuUsersRound,
         },
         {
-          title: "NFC Tab",
+          title: "NFC Tabs",
           count: responseData?.nfcTapCount,
           icon: TbNfc,
         },

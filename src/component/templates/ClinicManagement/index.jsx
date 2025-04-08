@@ -26,6 +26,8 @@ const ClinicManagement = () => {
   const [data,setData] = useState([]);
   const [loading,setLoading] = useState('');
   const [search,setSearch] = useState('');
+  const [isEdit,setIsEdit] = useState(false);
+  const [editData,setEditData] = useState({});
   const [page,setPage] = useState(1);
   const [totalRecords,setTotalRecords] = useState(0);
   const debouceSearch = useDebounce(search,500);  
@@ -82,7 +84,7 @@ const ClinicManagement = () => {
           renderItem={({ item, key, rowIndex }) => {
             const dataItem = data[rowIndex];
             if (key === "select") {
-              return <BsThreeDotsVertical fontSize={18} cursor={"pointer"} />;
+              return <BsThreeDotsVertical onClick={()=>{setIsEdit(true);setShow(true);setEditData(dataItem)}} fontSize={18} cursor={"pointer"} />;
             }
             if(key === 'date'){
               return(
@@ -94,7 +96,7 @@ const ClinicManagement = () => {
           }}
         />
       </div>
-      {show && <AddClinicModal show={show} setSearch={setSearch} setShow={setShow} getData={getData}  />}
+      {show && <AddClinicModal show={show} setIsEdit={setIsEdit} editData={editData} isEditData={isEdit} setSearch={setSearch} setShow={setShow} getData={getData}  />}
     </>
   );
 };

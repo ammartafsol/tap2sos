@@ -24,10 +24,10 @@ const HeaderRight = () => {
           </div>
         </div>
       </div>
-      <div className={classes?.arrow}>
+      {/* <div className={classes?.arrow}>
         <IoIosArrowUp />
         <IoIosArrowDown />
-      </div>
+      </div> */}
     </div>
   );
 };
