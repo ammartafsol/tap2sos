@@ -122,9 +122,9 @@ const DashboardTemplate = () => {
                 <div>{moment(dataItem?.createdAt).format("YYYY/MM/DD")}</div>
               );
             }
-            if (key === "select") {
-              return <BsThreeDotsVertical fontSize={18} cursor={"pointer"} />;
-            }
+            // if (key === "select") {
+            //   return <BsThreeDotsVertical fontSize={18} cursor={"pointer"} />;
+            // }
             return item || "";
           }}
         />
