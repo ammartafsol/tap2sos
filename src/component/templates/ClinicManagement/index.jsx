@@ -96,7 +96,7 @@ const ClinicManagement = () => {
           }}
         />
       </div>
-      {show && <AddClinicModal show={show} setIsEdit={setIsEdit} editData={editData} isEditData={isEdit} setSearch={setSearch} setShow={setShow} getData={getData}  />}
+      {show && <AddClinicModal show={show} setIsEdit={setIsEdit} editData={editData} isEdit={isEdit} setSearch={setSearch} setShow={setShow} getData={getData}  />}
     </>
   );
 };

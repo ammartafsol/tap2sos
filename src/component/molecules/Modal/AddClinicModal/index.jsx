@@ -15,7 +15,7 @@ const AddClinicModal = ({
   getData,
   setSearch,
   editData,
-  isEditData,
+  isEdit,
   setIsEdit,
   setIsEditData,
   setEditData,
@@ -39,7 +39,6 @@ const AddClinicModal = ({
   const handleSubmit = async (values) => {
     setLoading("loading");
   
-    const isEdit = !!editData;
     const response = isEdit
       ? await Patch({ route: `admin/update-clinic/${editData?.slug}`, data: values })
       : await Post({ route: "admin/create-clinic", data: values });
@@ -70,7 +69,7 @@ const AddClinicModal = ({
   };
 
   useEffect(() => {
-    if (isEditData) {
+    if (isEdit) {
       addClinicFormik.setFieldValue("clinicName", editData?.clinicName);
       addClinicFormik.setFieldValue("email", editData?.email);
       addClinicFormik.setFieldValue("phoneNumber", editData?.phoneNumber);
@@ -79,7 +78,7 @@ const AddClinicModal = ({
 
   return (
     <ModalSkeleton
-      header={`${isEditData ? "Edit" : "Add"} Clinic`}
+      header={`${isEdit ? "Edit" : "Add"} Clinic`}
       show={show}
       setShow={setShow}
     >
@@ -104,7 +103,7 @@ const AddClinicModal = ({
           placeholder="example@example.com"
           name="email"
           type="email"
-          disabled={isEditData}
+          disabled={isEdit}
           value={addClinicFormik.values.email}
           setter={(e) => addClinicFormik.setFieldValue("email", e)}
           errorText={
@@ -131,7 +130,7 @@ const AddClinicModal = ({
             label={`${
               loading === "loading"
                 ? "loading..."
-                : `${isEditData ? "Edit" : "Add"} Clinic`
+                : `${isEdit ? "Edit" : "Add"} Clinic`
             }`}
             type="submit"
           />
