@@ -8,12 +8,12 @@ export default function BorderWrapper({
   containerClass = "",
 }) {
   return (
-    <Container
+    <div
       className={`${classes.mainContainer} ${
         darkBorder && classes.borderDark
       } ${containerClass}`}
     >
       {children}
-    </Container>
+    </div>
   );
 }

@@ -6,6 +6,10 @@
   padding: 10px;
 }
 
+.itemCollapse{
+  padding: 10px 8px;
+}
+
 .item p {
   color: var(--black-color);
   font-size: 16px;

@@ -3,17 +3,19 @@ import React from "react";
 import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
 import classes from "./HeaderRight.module.css";
 import { IoIosArrowUp } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 const HeaderRight = () => {
+  const router = useRouter();
   return (
     <div className={classes?.header}>
-      <IoMdNotificationsOutline cursor={"pointer"} fontSize={24} />
+      {/* <IoMdNotificationsOutline cursor={"pointer"} fontSize={24} /> */}
       <div>
-        <div className={classes?.profileParent}>
-          <div className={classes?.profile}>
+        <div onClick={() => {router.push("/profile-setting")}} className={classes?.profileParent}>
+          <div className={classes?.profile} >
             <Image
               className={classes?.profileImage}
-              src={"/Images/cms-images/svgs/Avatar.svg"}
+              src={"/Images/app-images/web-image/avatar.png"}
               fill
               alt="images"
             />

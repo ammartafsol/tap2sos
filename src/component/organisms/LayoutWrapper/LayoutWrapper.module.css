@@ -19,6 +19,10 @@
 
 }
 
+.sidebarCollapse{
+    width: 80px;
+}
+
 
 .children{
     padding: 30px 20px 0px;

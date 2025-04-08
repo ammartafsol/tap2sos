@@ -5,7 +5,7 @@ import classes from "./SidebarItem.module.css";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-const SidebarItem = ({ item }) => {
+const SidebarItem = ({ item,isCollapsed }) => {
   const pathname = usePathname();
   const router = useRouter();
   const isActive = pathname === item.link;
@@ -15,10 +15,10 @@ const SidebarItem = ({ item }) => {
       onClick={() => {
         router.push(`${item?.link}`);
       }}
-      className={`${classes?.item} ${isActive && classes?.active}`}
+      className={`${classes?.item} ${isCollapsed && classes?.itemCollapse} ${isActive && classes?.active}`}
     >
       <item.icon className={classes?.icon} />
-      <p>{item?.name}</p>
+      <p className={isCollapsed && 'collapse'}>{item?.name}</p>
     </div>
   );
 };

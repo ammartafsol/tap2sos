@@ -9,11 +9,11 @@ const LayoutWrapper = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   return (
     <>
-      <Headers />
+      <Headers isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       <div className={classes.child}>
         <div className={classes?.subChild}>
-        <div className={classes?.sidebar}>
-          <Sidebar setIsCollapsed={setIsCollapsed} />
+        <div className={`${classes?.sidebar} ${isCollapsed && classes?.sidebarCollapse}`}>
+          <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
         </div>
         <div className={`${"fullHeight padding"} ${classes.children}`}>{children}</div>
         </div>

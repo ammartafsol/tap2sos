@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { signOutRequest } from "@/store/auth/authSlice";
 
-const Sidebar = ({setIsCollapsed}) => {
+const Sidebar = ({ isCollapsed }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const signout = () => {
@@ -22,17 +22,21 @@ const Sidebar = ({setIsCollapsed}) => {
     <div className={classes?.Sidebar}>
       <div className={classes?.sidebarItem}>
         {sidebarData?.map((item) => {
-          return <SidebarItem item={item} key={item._id} />;
+          return (
+            <SidebarItem isCollapsed={isCollapsed} item={item} key={item._id} />
+          );
         })}
       </div>
       <div
         onClick={() => {
-          signout()
+          signout();
         }}
         className={classes?.logout}
       >
         <IoLogOutOutline className={classes?.logoutIcon} />
-        <p>Logout</p>
+        <div className={isCollapsed && "collapse"}>
+          <p>Logout</p>
+        </div>
       </div>
     </div>
   );
