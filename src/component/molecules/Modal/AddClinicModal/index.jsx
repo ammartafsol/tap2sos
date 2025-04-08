@@ -117,6 +117,7 @@ const AddClinicModal = ({
           name="phoneNumber"
           value={addClinicFormik.values.phoneNumber}
           type={"number"}
+          onWheel={(e) => e.target.blur()}
           setter={(e) => addClinicFormik.setFieldValue("phoneNumber", e)}
           errorText={
             addClinicFormik.touched.phoneNumber &&

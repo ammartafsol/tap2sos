@@ -76,11 +76,20 @@ export const Input = ({
         <input
           value={value}
           onKeyDown={(e) => {
-            if (type === "number" && ["e", "E", "+", "-"].includes(e.key)) {
-              e.preventDefault();
+            if (type === "number") {
+              if (
+                ["e", "E", "+", "-", "ArrowUp", "ArrowDown"].includes(e.key)
+              ) {
+                e.preventDefault(); // Prevent invalid keys and arrow key increment/decrement
+              }
             }
             if (e.key === "Enter") {
               onClickEnter && onClickEnter();
+            }
+          }}
+          onWheel={(e) => {
+            if (type === "number") {
+              e.preventDefault(); // Prevent scrolling to change the number
             }
           }}
           onChange={(e) => {
