@@ -4,9 +4,11 @@ import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
 import classes from "./HeaderRight.module.css";
 import { IoIosArrowUp } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const HeaderRight = () => {
   const router = useRouter();
+  const {user} = useSelector((state) => state?.authReducer);
   return (
     <div className={classes?.header}>
       {/* <IoMdNotificationsOutline cursor={"pointer"} fontSize={24} /> */}
@@ -21,8 +23,8 @@ const HeaderRight = () => {
             />
           </div>
           <div className={classes?.profileDetails}>
-            <h4>Phillip Saris</h4>
-            <p>Admin</p>
+            <h4>{`${user?.firstName} ${user?.lastName}`}</h4>
+            <p>{user?.role}</p>
           </div>
         </div>
       </div>

@@ -5,11 +5,21 @@ import ModalSkeleton from "@/component/atoms/ModalSkeleton/ModalSkeleton";
 import { Input } from "@/component/atoms/Input";
 import Button from "@/component/atoms/Button";
 import { addClinicSchema } from "@/schema/addClinicSchema";
-import { Post } from "@/interceptor/axios-functions";
+import { Patch, Post } from "@/interceptor/axios-functions";
 import RenderToast from "@/component/atoms/RenderToast";
 import { useEffect, useState } from "react";
 
-const AddClinicModal = ({ show, setShow, getData, setSearch,editData,isEditData,setIsEdit,setIsEditData,setEditData }) => {
+const AddClinicModal = ({
+  show,
+  setShow,
+  getData,
+  setSearch,
+  editData,
+  isEditData,
+  setIsEdit,
+  setIsEditData,
+  setEditData,
+}) => {
   const [loading, setLoading] = useState("");
 
   const addClinicFormik = useFormik({
@@ -17,7 +27,7 @@ const AddClinicModal = ({ show, setShow, getData, setSearch,editData,isEditData,
       clinicName: "",
       email: "",
       phoneNumber: "",
-      longitude:67.0726,
+      longitude: 67.0726,
       latitude: 24.8994,
     },
     validationSchema: addClinicSchema,
@@ -28,10 +38,20 @@ const AddClinicModal = ({ show, setShow, getData, setSearch,editData,isEditData,
 
   const handleSubmit = async (values) => {
     setLoading("loading");
-    const response = await Post({ route: isEditData?"":'"admin/create-clinic"', data: values });
+  
+    const isEdit = !!editData;
+    const response = isEdit
+      ? await Patch({ route: `admin/update-clinic/${editData?.slug}`, data: values })
+      : await Post({ route: "admin/create-clinic", data: values });
+  
     setLoading("");
+  
     if (response?.data?.status === 200) {
-      RenderToast({ type: "success", message: "Clinic added successfully" });
+      RenderToast({
+        type: "success",
+        message: `Clinic ${isEdit ? "updated" : "added"} successfully`,
+      });
+  
       setShow(false);
       setSearch("");
       getData();
@@ -39,24 +59,30 @@ const AddClinicModal = ({ show, setShow, getData, setSearch,editData,isEditData,
       setEditData(false);
       addClinicFormik.resetForm();
     }
+    
   };
+  
 
   const onCancel = () => {
     setShow(false);
     setIsEdit(false);
     addClinicFormik.resetForm();
-  }
+  };
 
-  useEffect(()=>{
-    if(isEditData){
-      addClinicFormik.setFieldValue("clinicName",editData?.clinicName);
-      addClinicFormik.setFieldValue("email",editData?.email);
-      addClinicFormik.setFieldValue("phoneNumber",editData?.phoneNumber);
+  useEffect(() => {
+    if (isEditData) {
+      addClinicFormik.setFieldValue("clinicName", editData?.clinicName);
+      addClinicFormik.setFieldValue("email", editData?.email);
+      addClinicFormik.setFieldValue("phoneNumber", editData?.phoneNumber);
     }
-  },[]);
+  }, []);
 
   return (
-    <ModalSkeleton header={`${isEditData?"Edit":"Add"} Clinic`} show={show} setShow={setShow}>
+    <ModalSkeleton
+      header={`${isEditData ? "Edit" : "Add"} Clinic`}
+      show={show}
+      setShow={setShow}
+    >
       <form
         onSubmit={addClinicFormik.handleSubmit}
         className={classes.addFormField}
@@ -78,6 +104,7 @@ const AddClinicModal = ({ show, setShow, getData, setSearch,editData,isEditData,
           placeholder="example@example.com"
           name="email"
           type="email"
+          disabled={isEditData}
           value={addClinicFormik.values.email}
           setter={(e) => addClinicFormik.setFieldValue("email", e)}
           errorText={
@@ -98,14 +125,14 @@ const AddClinicModal = ({ show, setShow, getData, setSearch,editData,isEditData,
           }
         />
         <div className={classes.buttonDiv}>
-          <Button
-            label="Cancel"
-            variant="outlined"
-            onClick={onCancel}
-          />
+          <Button label="Cancel" variant="outlined" onClick={onCancel} />
           <Button
             disabled={loading === "loading"}
-            label={`${loading === "loading" ? "loading..." : `${isEditData?"Edit":"Add"} Clinic`}`}
+            label={`${
+              loading === "loading"
+                ? "loading..."
+                : `${isEditData ? "Edit" : "Add"} Clinic`
+            }`}
             type="submit"
           />
         </div>
