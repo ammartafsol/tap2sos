@@ -57,14 +57,15 @@ const CmsDetailViewTemplate = ({ pageName }) => {
 
     const handleSubmit = async () => {
 
-        // console.log("🚀 ~ handleSubmit ~ pageData:", pageData);
-        // console.log("🚀 ~ handleSubmit ~ originalObjectDepth:", originalObjectDepth, "pagedata", pageData[Object.keys(pageData)[0]]);
+        console.log("🚀 ~ handleSubmit ~ pageData:", pageData);
+        console.log("🚀 ~ handleSubmit ~ originalObjectDepth:", originalObjectDepth, "pagedata", pageData[Object.keys(pageData)[0]]);
 
         // return;
-        const dataToSend =
-            originalObjectDepth === 1 ? pageData[Object.keys(pageData)[0]] : pageData;
+        // const dataToSend =
+        // originalObjectDepth === 1 ? pageData[Object.keys(pageData)[0]] : pageData;
+        const dataToSend = pageData;
         setLoading("submit");
-        // console.log("🚀 ~ handleSubmit ~ dataToSend:", dataToSend);
+        console.log("🚀 ~ handleSubmit ~ dataToSend:", dataToSend);
         // return;
 
         const response = await Patch({

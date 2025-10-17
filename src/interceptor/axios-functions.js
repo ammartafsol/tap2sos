@@ -81,10 +81,15 @@ let handleRequest = async ({
     const errorMessage = getErrorMsg(error);
 
     if (showAlert) {
+      
+      // RenderToast({
+      //   type: "error",
+      //   message: errorMessage || "An unexpected error occurred.",
+      //   position: "top-center",
+      // });
       RenderToast({
-        type: "error",
         message: errorMessage || "An unexpected error occurred.",
-        position: "top-center",
+        type: "error",
       });
     }
 
