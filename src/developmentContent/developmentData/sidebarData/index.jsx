@@ -24,10 +24,10 @@ export const  sidebarData = [
         icon:CiSettings,
         link:'/profile-setting'
     },
-    {
-        _id:4,
-        name:'CMS',
-        icon:CiSettings,
-        link:'/cms'
-    },
+    // {
+    //     _id:4,
+    //     name:'CMS',
+    //     icon:CiSettings,
+    //     link:'/cms'
+    // },
 ]
