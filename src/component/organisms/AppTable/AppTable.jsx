@@ -90,7 +90,10 @@ export default function AppTable({
                 </tbody>
               </table>
             ) : (
-              <NoDataFound style={classes?.noData} text={noDataText} />
+              <>
+                {console.log("AppTable: No data found, showing NoDataFound component with text:", noDataText)}
+                <NoDataFound style={classes?.noData} text={noDataText} />
+              </>
             )}
           </div>
         )}
