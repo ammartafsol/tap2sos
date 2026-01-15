@@ -2,6 +2,7 @@
 
 import React from 'react';
 import classes from "./Chart.module.css";
+import PropTypes from "prop-types";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -102,3 +103,14 @@ export default function LineChart({ className, showXGrid = false, graphData }) {
     </div>
   );
 }
+
+LineChart.propTypes = {
+  className: PropTypes.string,
+  showXGrid: PropTypes.bool,
+  graphData: PropTypes.shape({
+    monthName: PropTypes.arrayOf(PropTypes.string),
+    monthCount: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    ),
+  }),
+};

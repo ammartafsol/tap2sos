@@ -2,6 +2,7 @@ import React from "react";
 import ReactQuill from "react-quill-new";
 import classes from "./CMSQuill.module.css";
 import "react-quill-new/dist/quill.snow.css";
+import PropTypes from "prop-types";
 
 function CMSQuill({ value, setter, quillClass = "", placeholder = "", label }) {
   return (
@@ -45,6 +46,14 @@ function CMSQuill({ value, setter, quillClass = "", placeholder = "", label }) {
 }
 
 export default CMSQuill;
+
+CMSQuill.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  setter: PropTypes.func,
+  quillClass: PropTypes.string,
+  placeholder: PropTypes.string,
+  label: PropTypes.string,
+};
 
 const modules = {
   toolbar: [

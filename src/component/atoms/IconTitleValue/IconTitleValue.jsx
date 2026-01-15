@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./IconTitleValue.module.css";
-
+import PropTypes from "prop-types";
 export default function IconTitleValue({ children, title = "", value = "" }) {
   return (
     <div className={classes.flex}>
@@ -12,3 +12,9 @@ export default function IconTitleValue({ children, title = "", value = "" }) {
     </div>
   );
 }
+
+IconTitleValue.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string,
+  value: PropTypes.string,
+};

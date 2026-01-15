@@ -60,7 +60,8 @@ export const Input = ({
           ].join(" ")}`}
           style={typeof labelStyle === "object" ? labelStyle : {}}
         >
-          {label} {label2 && label2}
+          {label}
+          {label2 ? ` ${label2}` : ""}
         </label>
       )}
       <div
@@ -84,7 +85,7 @@ export const Input = ({
               }
             }
             if (e.key === "Enter") {
-              onClickEnter && onClickEnter();
+              onClickEnter?.();
             }
           }}
           onWheel={(e) => {
@@ -93,13 +94,12 @@ export const Input = ({
             }
           }}
           onChange={(e) => {
-            if (setter) {
-              if (regexType === "number" || type === "number") {
-                setter(e?.target?.value?.replace(NUMBER_REG_EX, ""));
-              } else {
-                setter(e.target.value);
-              }
+            const nextValue = e.target.value;
+            if (regexType === "number" || type === "number") {
+              setter?.(nextValue.replace(NUMBER_REG_EX, ""));
+              return;
             }
+            setter?.(nextValue);
           }}
           disabled={disabled}
           placeholder={placeholder}
@@ -121,16 +121,18 @@ export const Input = ({
 
         {/* Password Toggle Icons - Removed "setter" Prop */}
         {type === "password" && (
-          <span
-            onClick={() => setPassToggle(!passToggle)}
+          <button
+            type="button"
+            onClick={() => setPassToggle((prev) => !prev)}
             className={classes.passwordIcon}
+            aria-label={passToggle ? "Hide password" : "Show password"}
           >
             {passToggle ? (
               <AiOutlineEye fontSize={25} />
             ) : (
               <AiOutlineEyeInvisible fontSize={25} />
             )}
-          </span>
+          </button>
         )}
       </div>
       {errorText && (
@@ -144,11 +146,15 @@ Input.propTypes = {
   type: PropTypes.oneOf(["text", "password", "email", "number"]),
   label: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setter: PropTypes.func, // ✅ Ensures setter is a function
   noBorder: PropTypes.bool,
   disabled: PropTypes.bool,
+  error: PropTypes.bool,
+  parentCustomStyle: PropTypes.object,
   customStyle: PropTypes.object,
+  inputStyle: PropTypes.object,
+  labelStyle: PropTypes.object,
   errorText: PropTypes.string,
   label2: PropTypes.string,
   leftIcon: PropTypes.node,

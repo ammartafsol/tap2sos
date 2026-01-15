@@ -7,21 +7,18 @@ import { Post } from "@/interceptor/axios-functions";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import classes from "./OTPTemplate.module.css";
 
 const OTPTemplate = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.authReducer?.user?.email);
   const [otpValues, setOtpValues] = useState(new Array(6).fill(""));
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState("");
   const [timer, setTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
-  const fromForgotPassword = Cookies.get("_xpdx_ver") ? false : true;
-
-  console.log("fromForgotPassword",fromForgotPassword);
+  const fromForgotPassword = !Cookies.get("_xpdx_ver");
 
   // handleInputChange
   const handleInputChange = (value, index) => {
@@ -49,7 +46,7 @@ const OTPTemplate = () => {
   // handle submit
   const handleSubmit = async () => {
     setLoading("loading");
-    if (otpValues.some((value) => value === "")) {
+    if (otpValues.includes("")) {
       setLoading("");
       return setErrorMessage("Please fill in all OTP fields.");
     }
@@ -61,33 +58,13 @@ const OTPTemplate = () => {
     Cookies.set("code", obj.code);
     const response = await Post({ route: "auth/verify/otp", data: obj });
     if (response) {
-      if (!fromForgotPassword) {
-        Cookies.remove("_xpdx_ver");
-          Cookies.remove("email");
-          Cookies.remove("code");
-        router.push("/auth/sign-in");
-        // const user = response?.data?.data;
-        // const userForCookie = {
-        //   role,
-        //   _id: user?._id,
-        //   email: user?.email,
-        //   isVerified: user?.isVerified,
-        // };
-
-        // Cookies.set("_xpdx_u", JSON.stringify(userForCookie), { expires: 90 });
-        // dispatch(updateUser(user));
-
-        // if (role === "customer") {
-        //   router.push("/customer");
-        // }
-        // if (role === "freelancer") {
-        //   router.push("/service-provider");
-
-        //   let profileCompletion = calculateProfileCompletion(user);
-        //   dispatch(setPortfolioProgress(profileCompletion));
-        // }
-      } else {
+      if (fromForgotPassword) {
         router.push("/auth/reset-password");
+      } else {
+        Cookies.remove("_xpdx_ver");
+        Cookies.remove("email");
+        Cookies.remove("code");
+        router.push("/auth/sign-in");
       }
       RenderToast({ type: "success", message: "Success" });
       setCanResend(false);
@@ -100,7 +77,7 @@ const OTPTemplate = () => {
     if (loading) return;
     const obj = {
       email: userEmail || Cookies.get("email"),
-      fromForgotPassword: fromForgotPassword,
+      fromForgotPassword,
     };
     setLoading("otp");
     const response = await Post({ route: "auth/resend/otp", data: obj });
@@ -124,23 +101,6 @@ const OTPTemplate = () => {
     }
     return () => clearInterval(interval);
   }, [timer]);
-
-
-  // useEffect(() => {
-  //   const handleBeforeUnload = () => {
-  //     Cookies.remove("_xpdx_ver");
-  //     Cookies.remove("email");
-  //     Cookies.remove("code");
-  //   };
-  
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-  
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, []);
-  
-
 
   return (
     <BorderWrapper containerClass={"authCard"}>
@@ -168,16 +128,17 @@ const OTPTemplate = () => {
             {timer > 0 ? (
               `⏳ ${timer} sec`
             ) : (
-              <span
+              <button
+                type="button"
                 className={classes.resendText}
-                onClick={canResend ? handleResendOTP : undefined}
-                style={{ cursor: canResend ? "pointer" : "default" }}
+                onClick={handleResendOTP}
+                disabled={!canResend || loading === "otp"}
               >
                 Didn't get the code?{" "}
                 <span className={classes.resendLink}>
                   {loading === "otp" ? "Sending..." : "Resend"}
                 </span>
-              </span>
+              </button>
             )}
           </p>
         </div>

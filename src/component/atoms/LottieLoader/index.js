@@ -1,7 +1,7 @@
 "use client";
 import { Player } from "@lottiefiles/react-lottie-player";
-
 import classes from "./LottieLoader.module.css";
+import PropTypes from "prop-types";
 
 const LottieLoader = ({ className }) => {
   return (
@@ -17,3 +17,8 @@ const LottieLoader = ({ className }) => {
 };
 
 export default LottieLoader;
+
+
+LottieLoader.propTypes = {
+  className: PropTypes.string,
+};

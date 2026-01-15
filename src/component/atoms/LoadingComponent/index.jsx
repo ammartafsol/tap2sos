@@ -10,4 +10,9 @@ const LoadingComponent = ({size='large'}) => {
   )
 }
 
-export default LoadingComponent
+export default LoadingComponent;
+
+
+LoadingComponent.propTypes = {
+  size: PropTypes.string,
+};

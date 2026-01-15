@@ -4,6 +4,7 @@ import React from "react";
 import classes from "./SidebarItem.module.css";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import PropTypes from "prop-types";
 
 const SidebarItem = ({ item,isCollapsed }) => {
   const pathname = usePathname();
@@ -24,3 +25,9 @@ const SidebarItem = ({ item,isCollapsed }) => {
 };
 
 export default SidebarItem;
+
+
+SidebarItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  isCollapsed: PropTypes.bool.isRequired,
+};

@@ -1,8 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
 import classes from "./HeaderRight.module.css";
-import { IoIosArrowUp } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
@@ -13,7 +11,13 @@ const HeaderRight = () => {
     <div className={classes?.header}>
       {/* <IoMdNotificationsOutline cursor={"pointer"} fontSize={24} /> */}
       <div>
-        <div onClick={() => {router.push("/profile-setting")}} className={classes?.profileParent}>
+        <button
+          type="button"
+          onClick={() => {
+            router.push("/profile-setting");
+          }}
+          className={classes?.profileParent}
+        >
           <div className={classes?.profile} >
             <Image
               className={classes?.profileImage}
@@ -26,7 +30,7 @@ const HeaderRight = () => {
             <h4>{`${user?.firstName} ${user?.lastName}`}</h4>
             <p>{user?.role}</p>
           </div>
-        </div>
+        </button>
       </div>
       {/* <div className={classes?.arrow}>
         <IoIosArrowUp />

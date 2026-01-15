@@ -33,3 +33,8 @@ function TableSkeleton({ rowsCount = 10, colsCount = 5 }) {
 }
 
 export default TableSkeleton;
+
+TableSkeleton.propTypes = {
+  rowsCount: PropTypes.number,
+  colsCount: PropTypes.number,
+};

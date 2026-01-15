@@ -62,4 +62,10 @@ TextArea.propTypes = {
   placeholder: PropTypes.string,
   customStyle: PropTypes.object,
   labelStyle: PropTypes.object,
+  rows: PropTypes.number,
+  className: PropTypes.string,
+  containerClass: PropTypes.string,
+  disabled: PropTypes.bool,
+  labelClass: PropTypes.string,
+  errorText: PropTypes.string,
 };

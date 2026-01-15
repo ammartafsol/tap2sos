@@ -7,6 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import classes from "./DateInput.module.css";
 import { mergeClass } from "@/resources/utils/helper";
+import PropTypes from "prop-types";
 
 export default function DateInput({
   value,
@@ -80,3 +81,18 @@ export default function DateInput({
     </div>
   );
 }
+
+DateInput.propTypes = {
+  value: PropTypes.any,
+  setValue: PropTypes.func,
+  label: PropTypes.string,
+  error: PropTypes.bool,
+  errorText: PropTypes.string,
+  placeholder: PropTypes.string,
+  inputClass: PropTypes.string,
+  minDate: PropTypes.any,
+  maxDate: PropTypes.any,
+  formatRestricted: PropTypes.bool,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+};

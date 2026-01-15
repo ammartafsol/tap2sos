@@ -1,4 +1,5 @@
 import AuthContainer from "@/component/atoms/AuthContainer";
+import PropTypes from "prop-types";
 
 export default function AuthLayout({ children }) {
   return (
@@ -7,3 +8,7 @@ export default function AuthLayout({ children }) {
     </AuthContainer>
   );
 }
+
+AuthLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

@@ -1,6 +1,5 @@
 "use client";
 
-import BorderWrapper from "@/component/atoms/BorderWrapper";
 import Button from "@/component/atoms/Button";
 import RenderToast from "@/component/atoms/RenderToast";
 import { Post } from "@/interceptor/axios-functions";
@@ -44,6 +43,7 @@ const SingInTemplate = () => {
   
     const response = await Post({ route: "admin/login", data: obj });  
     if (response?.data?.status === 200) {
+      RenderToast({type:"success",message:"Login Successfully"});
       const data = response?.data?.data;
       console.log("data",data);
       Cookies.set("_xpdx_u", JSON.stringify(data?.user), { expires: 90 });
@@ -89,14 +89,15 @@ const SingInTemplate = () => {
                 }
               />
             </Col>
-            <p
+            <button
+              type="button"
               onClick={() => {
                 router.push("/auth/forget-password");
               }}
               className={classes.forgetPassword}
             >
               Forgot Password?
-            </p>
+            </button>
           </Row>
           <Button
             disabled={loading === "loading"}

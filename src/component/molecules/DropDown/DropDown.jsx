@@ -9,11 +9,10 @@ import {
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
-import { RiArrowDropUpLine, RiArrowUpSLine } from "react-icons/ri";
 import { mergeClass } from "../../../resources/utils/helper";
 
 const CustomOption = (props) => {
-  const { data, isSelected, imageClass, optionClass, isCheckbox } = props;
+  const { data, imageClass, optionClass } = props;
 
   return (
     <components.Option {...props}>
@@ -57,6 +56,12 @@ const CustomOption = (props) => {
       </div>
     </components.Option>
   );
+};
+
+CustomOption.propTypes = {
+  data: PropTypes.object,
+  imageClass: PropTypes.string,
+  optionClass: PropTypes.string,
 };
 const DropDown = ({
   menuPlacement = "auto",
@@ -215,6 +220,7 @@ const DropDown = ({
                 {...props}
                 imageClass={imageClass}
                 isCheckbox={isCheckbox}
+                optionClass={optionClass}
               />
             ),
             ...Components,
@@ -239,15 +245,17 @@ DropDown.propTypes = {
   options: PropTypes.array.isRequired,
   label: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.object.isRequired,
+  value: PropTypes.any,
   setValue: PropTypes.func,
   disabled: PropTypes.bool,
   isMulti: PropTypes.bool,
+  isCheckbox: PropTypes.bool,
   customStyle: PropTypes.object,
   style: PropTypes.object,
   Components: PropTypes.object,
   labelClassName: PropTypes.string,
   imageClass: PropTypes.string,
+  optionClass: PropTypes.string,
 };
 
 DropDown.defaultProps = {

@@ -5,27 +5,22 @@ import { Input } from "@/component/atoms/Input";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
 import classes from "./ResetPassword.module.css";
 import { Col, Row } from "react-bootstrap";
-import { MdEmail } from "react-icons/md";
-import { FaLock, FaPhoneAlt, FaUser } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 import Button from "@/component/atoms/Button";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { Post } from "@/interceptor/axios-functions";
 import RenderToast from "@/component/atoms/RenderToast";
 import { useRouter } from "next/navigation";
-import { RESET_PASSWORD_FORM_VALUES, RESET_PASSWORD_SCHEMA } from "@/developmentContent/formik/formikInitialValues/form-initial-values";
+import { RESET_PASSWORD_FORM_VALUES } from "@/developmentContent/formik/formikInitialValues/form-initial-values";
 import { ResetPasswordSchema } from "@/developmentContent/formik/formikSchema/formik-schemas";
 
 const ResetPassword = () => {
   const router = useRouter();
   const [loading, setLoading] = useState("");
-  const initialValues = {
-    newPassword: "",
-    confirmPassword: "",
-  };
 
   const formikResetPassword = useFormik({
-    initialValues:RESET_PASSWORD_FORM_VALUES,
+    initialValues: RESET_PASSWORD_FORM_VALUES,
     validationSchema: ResetPasswordSchema,
     onSubmit: (values) => {
       handleSubmit(values);
@@ -92,7 +87,6 @@ const ResetPassword = () => {
             />
           </Col>
         </Row>
-        {/* <Checkbox label={"I agree to the Terms & Conditions"} setValue={()=>{}} /> */}
         <Button
           disabled={loading === "loading"}
           onClick={formikResetPassword.handleSubmit}

@@ -6,6 +6,19 @@
     justify-content: center;
     align-items: center;
     overflow: scroll;
+    position: relative;
+}
+
+.backToLoginWrap{
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+.backToLogin{
+  width: auto !important;
+  padding: 10px 14px !important;
 }
 
 

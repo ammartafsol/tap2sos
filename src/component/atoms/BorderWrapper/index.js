@@ -1,6 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classes from "./BorderWrapper.module.css";
-import { Container } from "react-bootstrap";
 
 export default function BorderWrapper({
   children,
@@ -17,3 +17,9 @@ export default function BorderWrapper({
     </div>
   );
 }
+
+BorderWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  darkBorder: PropTypes.bool,
+  containerClass: PropTypes.string,
+};

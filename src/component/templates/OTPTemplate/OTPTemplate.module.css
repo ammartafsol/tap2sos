@@ -80,6 +80,9 @@
     font-size: 0.9rem;
     color: #666;
     margin-top: 10px;
+    background: transparent;
+    border: 0;
+    padding: 0;
   }
   
   .resendLink {
