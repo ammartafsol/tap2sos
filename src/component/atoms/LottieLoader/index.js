@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const LottieLoader = ({ className }) => {
   return (
-    <div className={`${classes?.container} ${className && className}`}>
+    <div className={`${classes?.container} ${className ?? ""}`}>
       <Player
         autoplay
         loop

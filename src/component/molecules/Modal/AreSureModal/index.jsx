@@ -61,3 +61,14 @@ export default function AreSureModal({
     </ModalSkeleton>
   );
 }
+
+
+AreSureModal.propTypes = {
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  message: PropTypes.string,
+  onYes: PropTypes.func,
+  onYesWithReason: PropTypes.func,
+  isLoading: PropTypes.bool,
+  showReason: PropTypes.bool,
+};

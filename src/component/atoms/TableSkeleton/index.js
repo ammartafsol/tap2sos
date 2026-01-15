@@ -1,21 +1,39 @@
 import { Skeleton } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import classes from "./TableSkeleton.module.css";
 import { mergeClass } from "@/resources/utils/helper";
+import PropTypes from "prop-types";
 
 function TableSkeleton({ rowsCount = 10, colsCount = 5 }) {
-  const rows = Array(rowsCount).fill(0);
-  const cols = Array(colsCount).fill(0);
+  const rowKeys = useMemo(
+    () =>
+      Array.from({ length: rowsCount }, () =>
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random()}`
+      ),
+    [rowsCount]
+  );
+
+  const colKeys = useMemo(
+    () =>
+      Array.from({ length: colsCount }, () =>
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random()}`
+      ),
+    [colsCount]
+  );
 
   return (
     <div className={mergeClass(`${classes?.tableBodyContainer}`)}>
       <table>
         <tbody>
-          {rows.map((rowItem, rowIndex) => (
-            <tr key={rowIndex}>
-              {cols?.map((item, colIndex) => (
+          {rowKeys.map((rowKey) => (
+            <tr key={rowKey}>
+              {colKeys.map((colKey) => (
                 <td
-                  key={colIndex}
+                  key={colKey}
                   style={{
                     width: `${100 / colsCount}%`,
                     paddingBlock: "0px",

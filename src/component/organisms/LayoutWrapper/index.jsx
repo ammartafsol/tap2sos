@@ -1,9 +1,9 @@
 "use client";
 import Headers from "@/component/molecules/Header";
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
 import classes from "./LayoutWrapper.module.css";
 import Sidebar from "@/component/molecules/Sidebar/page";
+import PropTypes from "prop-types";
 
 const LayoutWrapper = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -23,3 +23,7 @@ const LayoutWrapper = ({ children }) => {
 };
 
 export default LayoutWrapper;
+
+LayoutWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+};

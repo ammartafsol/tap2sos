@@ -20,6 +20,9 @@
     gap: 10px;
     color: var(--fiery-red);
     cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
 }
 .logout p{
     margin-bottom: 0px !important;

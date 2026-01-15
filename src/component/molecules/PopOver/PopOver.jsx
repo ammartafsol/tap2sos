@@ -6,7 +6,7 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { BsThreeDots } from "react-icons/bs";
 import Style from "./PopOver.module.css";
 import clsx from "clsx";
-
+import PropTypes from "prop-types";
 export default function PopOver({
   popover = [],
   onClick = () => {},
@@ -69,3 +69,10 @@ export default function PopOver({
     </>
   );
 }
+
+
+PopOver.propTypes = {
+  popover: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};

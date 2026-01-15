@@ -4,9 +4,9 @@ import {  getNestedObject, mergeClass } from "@/resources/utils/helper";
 import { RECORDS_LIMIT } from "@/const";
 import NoDataFound from "@/component/atoms/NoDataFound/NoDataFound";
 import Pagination from "@/component/molecules/PaginationComponent";
-// import { NoData } from "@/component/atoms/NoData/NoData";
+import PropTypes from "prop-types";
 
-export default function AppTable({
+const AppTable = ({
   data = [],
   loading = false,
   tableHeader = [],
@@ -16,13 +16,13 @@ export default function AppTable({
   hasPagination = true,
   containerClass,
   ...props
-}) {
+}) => {
   return (
     <>
       <div
         className={mergeClass(
           classes?.tableMainContainer,
-          containerClass && containerClass
+          containerClass
         )}
       >
         <div className={mergeClass(`${classes?.tableHeaderContainer}`)}>
@@ -31,10 +31,10 @@ export default function AppTable({
               <tr>
                 {tableHeader?.map((item, index) => (
                   <th
-                    key={index}
+                    key={item?.key ?? item?.title}
                     style={{
                       textAlign: "left",
-                      ...(item.style && item.style),
+                      ...(item.style || {}),
                     }}
                   >
                     {renderTableHeader
@@ -57,15 +57,26 @@ export default function AppTable({
               <table>
                 <tbody>
                   {data?.map((item, rowIndex) => {
+                    const rowKey =
+                      item?._id ??
+                      item?.id ??
+                      item?.slug ??
+                      item?.email ??
+                      item?.key ??
+                      item?.name ??
+                      item?.title ??
+                      crypto?.randomUUID?.() ??
+                      Math.random().toString(36).slice(2);
                     return (
-                      <tr key={rowIndex}>
+                      <tr key={rowKey}>
                         {tableHeader.map(({ key, style, title }, colIndex) => {
                           let __item = getNestedObject(item, key);
+                          const cellKey = `${rowKey}-${key ?? title}`;
 
                           return (
                             <td
                             className={classes.text}
-                              key={colIndex}
+                              key={cellKey}
                               style={{
                                 textAlign: "left",
                                 ...style,
@@ -90,10 +101,7 @@ export default function AppTable({
                 </tbody>
               </table>
             ) : (
-              <>
-                {console.log("AppTable: No data found, showing NoDataFound component with text:", noDataText)}
-                <NoDataFound style={classes?.noData} text={noDataText} />
-              </>
+              <NoDataFound style={classes?.noData} text={noDataText} />
             )}
           </div>
         )}
@@ -101,11 +109,27 @@ export default function AppTable({
       {hasPagination && (
         <Pagination
           {...props}
-          // totalRecords={totalRecords}
-          // currentPage={pages}
-          // setCurrentPage={setPages}
         />
       )}
     </>
   );
-}
+};
+
+AppTable.propTypes = {
+  data: PropTypes.array,
+  loading: PropTypes.bool,
+  tableHeader: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      title: PropTypes.string,
+      style: PropTypes.object,
+    })
+  ),
+  noDataText: PropTypes.string,
+  renderItem: PropTypes.func,
+  renderTableHeader: PropTypes.func,
+  hasPagination: PropTypes.bool,
+  containerClass: PropTypes.string,
+};
+
+export default AppTable;

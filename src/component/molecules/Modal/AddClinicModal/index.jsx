@@ -8,6 +8,7 @@ import { addClinicSchema } from "@/schema/addClinicSchema";
 import { Patch, Post } from "@/interceptor/axios-functions";
 import RenderToast from "@/component/atoms/RenderToast";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const AddClinicModal = ({
   show,
@@ -21,6 +22,9 @@ const AddClinicModal = ({
   setEditData,
 }) => {
   const [loading, setLoading] = useState("");
+  let actionText = "Add";
+  if (isEdit) actionText = "Edit";
+  const submitLabel = loading === "loading" ? "loading..." : `${actionText} Clinic`;
 
   const addClinicFormik = useFormik({
     initialValues: {
@@ -128,11 +132,7 @@ const AddClinicModal = ({
           <Button label="Cancel" variant="outlined" onClick={onCancel} />
           <Button
             disabled={loading === "loading"}
-            label={`${
-              loading === "loading"
-                ? "loading..."
-                : `${isEdit ? "Edit" : "Add"} Clinic`
-            }`}
+            label={submitLabel}
             type="submit"
           />
         </div>
@@ -142,3 +142,20 @@ const AddClinicModal = ({
 };
 
 export default AddClinicModal;
+
+AddClinicModal.propTypes = {
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  getData: PropTypes.func,
+  setSearch: PropTypes.func,
+  editData: PropTypes.shape({
+    slug: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    clinicName: PropTypes.string,
+    email: PropTypes.string,
+    phoneNumber: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
+  isEdit: PropTypes.bool,
+  setIsEdit: PropTypes.func,
+  setIsEditData: PropTypes.func,
+  setEditData: PropTypes.func,
+};

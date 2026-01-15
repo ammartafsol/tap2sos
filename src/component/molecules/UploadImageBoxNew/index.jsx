@@ -6,6 +6,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import classes from "./UploadImageBoxNew.module.css";
 import {  mediaUrl } from "@/resources/utils/helper";
 import clsx from 'clsx';
+import PropTypes from "prop-types";
 
 
 const UploadImageBoxNew = ({
@@ -117,3 +118,21 @@ const UploadImageBoxNew = ({
 };
 
 export default UploadImageBoxNew;
+
+UploadImageBoxNew.propTypes = {
+  disabled: PropTypes.bool,
+  state: PropTypes.any,
+  setter: PropTypes.func,
+  label: PropTypes.string,
+  subLabel: PropTypes.string,
+  edit: PropTypes.bool,
+  onDelete: PropTypes.func,
+  onClose: PropTypes.func,
+  fallBackImage: PropTypes.string,
+  isCloseable: PropTypes.bool,
+  hideDeleteIcon: PropTypes.bool,
+  imgClass: PropTypes.string,
+  uploadImageBox: PropTypes.string,
+  containerClass: PropTypes.string,
+  onEdit: PropTypes.func,
+};

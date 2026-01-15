@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FaBars } from "react-icons/fa6";
 import HeaderRight from "@/component/atoms/HeaderRight/page";
 import { FaChevronCircleRight } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 
 
@@ -27,3 +28,8 @@ const Header = ({isCollapsed,setIsCollapsed}) => {
 };
 
 export default Header;
+
+Header.propTypes = {
+  isCollapsed: PropTypes.bool,
+  setIsCollapsed: PropTypes.func,
+};

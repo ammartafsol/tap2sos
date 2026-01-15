@@ -1,6 +1,7 @@
 import React from 'react'
 import classes from "./LoadingComponent.module.css"
 import { ThreeDot } from 'react-loading-indicators'
+import PropTypes from "prop-types";
 
 const LoadingComponent = ({size='large'}) => {
   return (

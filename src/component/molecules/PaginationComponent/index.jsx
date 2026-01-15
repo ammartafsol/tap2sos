@@ -5,7 +5,7 @@ import {
 } from "react-icons/md";
 import classes from "./paginationComponent.module.css";
 import { RECORDS_LIMIT } from "@/const";
-
+import PropTypes from "prop-types";
 export default function Pagination({
   totalRecords = 50,
   currentPage = 1,
@@ -33,18 +33,33 @@ export default function Pagination({
         className={classes.text}
       >{`Showing ${currentPage} of ${totalPages}`}</div>
       <div className="d-flex gap-2">
-        <div onClick={goToPrevPage}>
-          <div className={classes.iconBox}>
-            <MdKeyboardArrowLeft size={20} />
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={goToPrevPage}
+          disabled={currentPage <= 1}
+          className={classes.iconBox}
+          aria-label="Previous page"
+        >
+          <MdKeyboardArrowLeft size={20} />
+        </button>
 
-        <div onClick={goToNextPage}>
-          <div className={classes.iconBox}>
-            <MdOutlineKeyboardArrowRight size={20} />
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={goToNextPage}
+          disabled={currentPage >= totalPages}
+          className={classes.iconBox}
+          aria-label="Next page"
+        >
+          <MdOutlineKeyboardArrowRight size={20} />
+        </button>
       </div>
     </div>
   );
 }
+
+
+Pagination.propTypes = {
+  totalRecords: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./StatesCard.module.css";
-import { LuHospital } from "react-icons/lu";
+import PropTypes from "prop-types";
 
 const StatesCard = ({ item }) => {
   const IconComponenet = item?.icon;
@@ -18,3 +18,11 @@ const StatesCard = ({ item }) => {
 };
 
 export default StatesCard;
+
+StatesCard.propTypes = {
+  item: PropTypes.shape({
+    icon: PropTypes.elementType,
+    title: PropTypes.string,
+    count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
+};
