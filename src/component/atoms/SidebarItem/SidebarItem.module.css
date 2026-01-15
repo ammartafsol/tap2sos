@@ -8,6 +8,8 @@
 
 .itemCollapse{
   padding: 10px 8px;
+  justify-content: center;
+  gap: 0px;
 }
 
 .item p {

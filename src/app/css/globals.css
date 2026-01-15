@@ -158,5 +158,17 @@ body {
 
 .collapse{
   width: 0px;
-  transition: transform 0.3s ease-in-out !important;
+  max-width: 0px;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              max-width 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapse {
+    transition: none !important;
+  }
 }

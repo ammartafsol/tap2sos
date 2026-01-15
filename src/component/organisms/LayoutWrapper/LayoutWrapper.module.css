@@ -16,11 +16,15 @@
     width: 280px;
     padding: 0px 20px;
     border-right: 1px solid var(--gray-color);
+    overflow: hidden;
+    transition: width 380ms cubic-bezier(0.2, 0.8, 0.2, 1), padding 380ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: width;
 
 }
 
 .sidebarCollapse{
     width: 80px;
+    padding: 0px 10px;
 }
 
 
