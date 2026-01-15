@@ -2,32 +2,17 @@
 
 import PopOver from "@/component/molecules/PopOver/PopOver";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-// import { CMS_POPOVER_OPTIONS } from "@/developmentContent/dropdownOptions";
 import { CMS_PAGE_HEADER } from "@/developmentContent/tableHeader";
-import { Get, Patch } from "@/interceptor/axios-functions";
+import { Get } from "@/interceptor/axios-functions";
 import { getFormattedParams } from "@/resources/utils/helper";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import classes from "./CmsViewTemplate.module.css";
 
-const unwantedKeys = ["_id", "updatedAt", "__v", "createdAt"];
+const unwantedKeys = new Set(["_id", "updatedAt", "__v", "createdAt"]);
 
 export default function CMSViewTemplate() {
-  function toCamelCase(str) {
-    if (typeof str !== "string") return "";
-
-    return str
-      .replace(/[^a-zA-Z0-9 ]/g, "")
-      .split(" ")
-      .map((word, index) =>
-        index === 0
-          ? word.toLowerCase()
-          : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-      )
-      .join("");
-  }
-
   const router = useRouter();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(""); // table
@@ -53,7 +38,7 @@ export default function CMSViewTemplate() {
       console.log("🚀 ~ getData ~ response:", response?.data?.data?.data);
       const res = response?.data?.data?.data;
       let dataArray = Object.keys(res)?.filter(
-        (key) => !unwantedKeys.includes(key)
+        (key) => !unwantedKeys.has(key)
       );
       dataArray = dataArray.map((key) => {
         return {

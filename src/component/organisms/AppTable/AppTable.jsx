@@ -38,7 +38,7 @@ const AppTable = ({
                     key={headerKey}
                     style={{
                       textAlign: "left",
-                      ...(item.style || {}),
+                      ...(item?.style ? item.style : undefined),
                     }}
                   >
                     {renderTableHeader

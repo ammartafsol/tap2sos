@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Col, Container, Row } from "react-bootstrap";
-import { MdDelete, MdSave, MdAdd, MdEdit, MdContentCopy, MdRefresh } from "react-icons/md";
+import { Container } from "react-bootstrap";
+import { MdDelete, MdSave, MdAdd, MdRefresh } from "react-icons/md";
 import { FiFileText, FiImage, FiVideo, FiType } from "react-icons/fi";
+import PropTypes from "prop-types";
 
 import Button from "@/component/atoms/Button";
 import { Input } from "@/component/atoms/Input";
@@ -26,8 +27,8 @@ import CMSQuill from "@/component/molecules/CMSQuill";
 import UploadImageBoxNew from "@/component/molecules/UploadImageBoxNew";
 
 const imageFields = ["icon", "photo", "image", "images", "video", "mainImage", "backgroundImage", "topIcon"];
-const descriptionFields = ["description"];
-const htmlDescription = ["htmlDescription", "content"];
+const descriptionFields = new Set(["description"]);
+const htmlDescription = new Set(["htmlDescription", "content"]);
 
 const CmsDetailViewTemplate = ({ pageName }) => {
     const router = useRouter();
@@ -37,7 +38,37 @@ const CmsDetailViewTemplate = ({ pageName }) => {
     const [videoProgress, setVideoProgress] = useState(0);
     const [hasChanges, setHasChanges] = useState(false);
 
-    const hideActions = ["header"].includes(pageName?.toLowerCase());
+    const pageNameLower = (pageName ?? "").toLowerCase();
+    const hideActions = pageNameLower === "header";
+
+    const updateValueAtPath = (updateFunc, path, value) => {
+        updateFunc((prev) => setDeepValue(prev, path, value));
+        setHasChanges(true);
+    };
+
+    const addArrayItemAtPath = (updateFunc, currentPath, val) => {
+        updateFunc((prev) => {
+            let newItem;
+            if (val.length > 0) {
+                newItem = returnKeyEmptyAsPerType(val[0]);
+                if (newItem && typeof newItem === "object" && newItem._id) {
+                    delete newItem._id;
+                }
+            } else {
+                newItem = "";
+            }
+            return setDeepValue(prev, currentPath, [...val, newItem]);
+        });
+        setHasChanges(true);
+    };
+
+    const deleteArrayItemAtPath = (updateFunc, currentPath, val, index) => {
+        updateFunc((prev) => {
+            const updatedArr = val.filter((_, i) => i !== index);
+            return setDeepValue(prev, currentPath, updatedArr);
+        });
+        setHasChanges(true);
+    };
 
     //   use effect
     useEffect(() => {
@@ -60,13 +91,9 @@ const CmsDetailViewTemplate = ({ pageName }) => {
         console.log("🚀 ~ handleSubmit ~ pageData:", pageData);
         console.log("🚀 ~ handleSubmit ~ originalObjectDepth:", originalObjectDepth, "pagedata", pageData[Object.keys(pageData)[0]]);
 
-        // return;
-        // const dataToSend =
-        // originalObjectDepth === 1 ? pageData[Object.keys(pageData)[0]] : pageData;
         const dataToSend = pageData;
         setLoading("submit");
         console.log("🚀 ~ handleSubmit ~ dataToSend:", dataToSend);
-        // return;
 
         const response = await Patch({
             route: `cms/page/update/${pageName}`,
@@ -83,7 +110,7 @@ const CmsDetailViewTemplate = ({ pageName }) => {
         if (imageFields.includes(key)) {
             return key === "video" ? <FiVideo size={20} /> : <FiImage size={20} />;
         }
-        if (htmlDescription.includes(key)) {
+        if (htmlDescription.has(key)) {
             return <FiFileText size={20} />;
         }
         return <FiType size={20} />;
@@ -118,24 +145,7 @@ const CmsDetailViewTemplate = ({ pageName }) => {
                                 await Delete({ route: `cms/delete/media/${value}` });
                             }
 
-                            if (key !== "video") {
-                                // Handle image upload
-                                const formData = new FormData();
-                                formData.append("images", newValue);
-
-                                const { response } = await Post({
-                                    route: "media/upload",
-                                    data: formData,
-                                    isFormData: true,
-                                });
-                                console.log("🚀 ~ setter ~ response:", response);
-
-                                setLoading("");
-
-                                const imageUrl = response?.data?.images?.[0]?.key;
-                                console.log("🚀 ~ setter ~ imageUrl:", imageUrl);
-                                onChange(imageUrl);
-                            } else {
+                            if (key === "video") {
                                 // Handle video upload
                                 const { response: presignedRes } = await Post({
                                     route: "media/upload",
@@ -156,6 +166,23 @@ const CmsDetailViewTemplate = ({ pageName }) => {
                                     presignedRes?.data?.data?.keys?.[0];
 
                                 onChange(videoKey);
+                            } else {
+                                // Handle image upload
+                                const formData = new FormData();
+                                formData.append("images", newValue);
+
+                                const { response } = await Post({
+                                    route: "media/upload",
+                                    data: formData,
+                                    isFormData: true,
+                                });
+                                console.log("🚀 ~ setter ~ response:", response);
+
+                                setLoading("");
+
+                                const imageUrl = response?.data?.images?.[0]?.key;
+                                console.log("🚀 ~ setter ~ imageUrl:", imageUrl);
+                                onChange(imageUrl);
                             }
                         } else {
                             onChange(newValue);
@@ -190,25 +217,7 @@ const CmsDetailViewTemplate = ({ pageName }) => {
                                     label="Add More"
                                     leftIcon={<MdAdd size={16} />}
                                     className={classes.addMoreButton}
-                                    onClick={() => {
-                                        updateFunc((prev) => {
-                                            let newItem;
-                                            if (val.length > 0) {
-                                                newItem = returnKeyEmptyAsPerType(val[0]);
-                                                if (
-                                                    newItem &&
-                                                    typeof newItem === "object" &&
-                                                    newItem._id
-                                                ) {
-                                                    delete newItem._id;
-                                                }
-                                            } else {
-                                                newItem = "";
-                                            }
-                                            return setDeepValue(prev, currentPath, [...val, newItem]);
-                                        });
-                                        setHasChanges(true);
-                                    }}
+                                    onClick={() => addArrayItemAtPath(updateFunc, currentPath, val)}
                                 />
                             )}
                         </div>
@@ -235,22 +244,9 @@ const CmsDetailViewTemplate = ({ pageName }) => {
                                                     leftIcon={<MdDelete size={16} />}
                                                     variant="secondary"
                                                     className={classes.deleteButton}
-                                                    onClick={() => {
-                                                        updateFunc((prev) => {
-                                                            const updatedArr = val.filter(
-                                                                (_, i) => i !== index
-                                                            );
-
-                                                            const newState = setDeepValue(
-                                                                prev,
-                                                                currentPath,
-                                                                updatedArr
-                                                            );
-
-                                                            return newState;
-                                                        });
-                                                        setHasChanges(true);
-                                                    }}
+                                                    onClick={() =>
+                                                        deleteArrayItemAtPath(updateFunc, currentPath, val, index)
+                                                    }
                                                 />
                                             )}
                                         </div>
@@ -269,14 +265,11 @@ const CmsDetailViewTemplate = ({ pageName }) => {
                                             `${currentPath}.${index}`,
                                             key,
                                             (newValue) => {
-                                                updateFunc((prev) =>
-                                                    setDeepValue(
-                                                        prev,
-                                                        `${currentPath}.${index}`,
-                                                        newValue
-                                                    )
+                                                updateValueAtPath(
+                                                    updateFunc,
+                                                    `${currentPath}.${index}`,
+                                                    newValue
                                                 );
-                                                setHasChanges(true);
                                             }
                                         )}
                                 </div>
@@ -288,10 +281,9 @@ const CmsDetailViewTemplate = ({ pageName }) => {
                 return renderObject(val, currentPath, updateFunc);
             }
 
-            return renderField(val, currentPath, key, (newValue) => {
-                updateFunc((prev) => setDeepValue(prev, currentPath, newValue));
-                setHasChanges(true);
-            });
+            return renderField(val, currentPath, key, (newValue) =>
+                updateValueAtPath(updateFunc, currentPath, newValue)
+            );
         });
     };
 
@@ -303,13 +295,24 @@ const CmsDetailViewTemplate = ({ pageName }) => {
 
     return (
         <Container fluid className={classes.main}>
-            <div
-                style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", marginBottom: 12 }}
+            <button
+                type="button"
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    cursor: "pointer",
+                    marginBottom: 12,
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                }}
                 onClick={() => router.back()}
+                aria-label="Back"
             >
                 <IoArrowBackCircleOutline cursor={"pointer"} color="#1D4ED8" size={26} />
                 <h4 style={{ margin: 0 }}>Back</h4>
-            </div>
+            </button>
             <div className={classes.pageHeader}>
                 <h1 className={classes.pageTitle}>{getFormattedParams(pageName)}</h1>
                 <p className={classes.pageSubtitle}>
@@ -363,11 +366,15 @@ const CmsDetailViewTemplate = ({ pageName }) => {
 export default CmsDetailViewTemplate;
 
 function getInputComponent(key) {
-    if (htmlDescription.includes(key)) return CMSQuill;
-    if (descriptionFields.includes(key)) return TextArea;
+    if (htmlDescription.has(key)) return CMSQuill;
+    if (descriptionFields.has(key)) return TextArea;
     if (imageFields.includes(key)) return UploadImageBoxNew;
     return Input;
 }
+
+CmsDetailViewTemplate.propTypes = {
+    pageName: PropTypes.string,
+};
 
 function setDeepValue(obj, path, value) {
     const keys = path.split(".").filter(Boolean);
@@ -378,17 +385,11 @@ function setDeepValue(obj, path, value) {
         if (idx === keys.length - 1) {
             curr[key] = value;
         } else {
-            if (!isNaN(key)) {
-                if (!Array.isArray(curr)) {
-                    curr = [];
-                }
-                if (!curr[key]) {
-                    curr[key] = {};
-                }
-            } else {
-                if (!curr[key]) {
-                    curr[key] = {};
-                }
+            const isArrayIndex = Number.isInteger(Number(key));
+            if (isArrayIndex) {
+                if (!curr[key]) curr[key] = {};
+            } else if (!curr[key]) {
+                curr[key] = {};
             }
             curr = curr[key];
         }
