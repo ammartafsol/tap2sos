@@ -1,20 +1,14 @@
 "use client";
 
 import Button from "@/component/atoms/Button";
-import DropDown from "@/component/molecules/DropDown/DropDown";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import {
-  clinicTableData,
-  clinicTableData2,
-} from "@/developmentContent/tableBody";
 import { ClinicTableHeader } from "@/developmentContent/tableHeader";
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoAdd } from "react-icons/io5";
+import { IoAdd, IoSearchOutline } from "react-icons/io5";
 import classes from "./ClinicManagement.module.css";
 import AddClinicModal from "@/component/molecules/Modal/AddClinicModal";
 import { Input } from "@/component/atoms/Input";
-import { IoSearchOutline } from "react-icons/io5";
 import useDebounce from "@/resources/hooks/useDebounce";
 import { RECORDS_LIMIT } from "@/const";
 import { Get } from "@/interceptor/axios-functions";
@@ -26,11 +20,14 @@ const ClinicManagement = () => {
   const [data,setData] = useState([]);
   const [loading,setLoading] = useState('');
   const [search,setSearch] = useState('');
+  const debounceSearch = useDebounce(search,500);
   const [isEdit,setIsEdit] = useState(false);
   const [editData,setEditData] = useState({});
   const [page,setPage] = useState(1);
   const [totalRecords,setTotalRecords] = useState(0);
   const debouceSearch = useDebounce(search,500);  
+
+
   const getData = async (p=page)=>{
     setLoading('loading');
     const query = {
@@ -38,7 +35,7 @@ const ClinicManagement = () => {
       limit: RECORDS_LIMIT,
       search: debouceSearch,
     }
-    const queryString = new URLSearchParams(query).toString().replace(/\+/g, '%20');
+    const queryString = new URLSearchParams(query).toString().replaceAll("+", "%20");
     const response = await Get({route:`admin/users/all?${queryString}`});
     setLoading('');
     if(response?.data.status === 200){
@@ -49,7 +46,8 @@ const ClinicManagement = () => {
 
 
   useEffect(()=>{
-    getData();
+    getData(1);
+    setPage(1);
   },[debouceSearch]);
 
 
@@ -82,13 +80,18 @@ const ClinicManagement = () => {
           setCurrentPage={(p)=>{setPage(p);getData(p)}}
           currentPage={page}
           renderItem={({ item, key, rowIndex }) => {
-            const dataItem = data[rowIndex];
+            const dataItem = data?.[rowIndex];
             if (key === "select") {
+              console.log("dataItem",dataItem);
               return <BsThreeDotsVertical onClick={()=>{setIsEdit(true);setShow(true);setEditData(dataItem)}} fontSize={18} cursor={"pointer"} />;
             }
             if(key === 'date'){
               return(
-                <div>{moment(dataItem?.createdAt).format('YYYY/MM/DD')}</div>
+                <div>
+                  {dataItem?.createdAt
+                    ? moment(dataItem.createdAt).format('YYYY/MM/DD')
+                    : ""}
+                </div>
               )
             }
 

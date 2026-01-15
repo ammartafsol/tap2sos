@@ -7,13 +7,10 @@ import LineChart from "@/component/molecules/Chart";
 import BorderWrapper from "@/component/atoms/BorderWrapper";
 import DropDown from "@/component/molecules/DropDown/DropDown";
 import AppTable from "@/component/organisms/AppTable/AppTable";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { clinicTableData } from "@/developmentContent/tableBody";
 import { ClinicTableHeader } from "@/developmentContent/tableHeader";
 import { Get } from "@/interceptor/axios-functions";
 import LoadingComponent from "@/component/atoms/LoadingComponent";
-import { LuHospital } from "react-icons/lu";
-import { LuUsersRound } from "react-icons/lu";
+import { LuHospital, LuUsersRound } from "react-icons/lu";
 import { TbNfc } from "react-icons/tb";
 import moment from "moment";
 import { generateYearOptions } from "@/resources/utils/helper";
@@ -86,9 +83,9 @@ const DashboardTemplate = () => {
       <div className="h1">Dashboard</div>
 
       <Row className={classes?.statesMain}>
-        {statesData?.map((item, index) => {
+        {statesData?.map((item) => {
           return (
-            <Col key={index} md="6" lg="4">
+            <Col key={item?.title} md="6" lg="4">
               <StatesCard item={item} />
             </Col>
           );
@@ -122,9 +119,6 @@ const DashboardTemplate = () => {
                 <div>{moment(dataItem?.createdAt).format("YYYY/MM/DD")}</div>
               );
             }
-            // if (key === "select") {
-            //   return <BsThreeDotsVertical fontSize={18} cursor={"pointer"} />;
-            // }
             return item || "";
           }}
         />

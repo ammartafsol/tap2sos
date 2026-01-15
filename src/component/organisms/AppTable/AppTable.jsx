@@ -29,19 +29,24 @@ const AppTable = ({
           <table>
             <thead>
               <tr>
-                {tableHeader?.map((item, index) => (
+                {tableHeader?.map((item) => {
+                  const headerKey =
+                    item?.key ?? item?.title ?? crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2);
+
+                  return (
                   <th
-                    key={item?.key ?? item?.title}
+                    key={headerKey}
                     style={{
                       textAlign: "left",
                       ...(item.style || {}),
                     }}
                   >
                     {renderTableHeader
-                      ? renderTableHeader({ item: item, index })
+                      ? renderTableHeader({ item })
                       : item?.title}
                   </th>
-                ))}
+                  );
+                })}
               </tr>
             </thead>
           </table>
@@ -69,7 +74,7 @@ const AppTable = ({
                       Math.random().toString(36).slice(2);
                     return (
                       <tr key={rowKey}>
-                        {tableHeader.map(({ key, style, title }, colIndex) => {
+                        {tableHeader.map(({ key, style, title }) => {
                           let __item = getNestedObject(item, key);
                           const cellKey = `${rowKey}-${key ?? title}`;
 
@@ -85,11 +90,10 @@ const AppTable = ({
                               {renderItem
                                 ? renderItem({
                                     item: __item,
-                                    colIndex,
-                                    rowIndex,
                                     key,
                                     title,
-                                    data
+                                    data,
+                                    rowIndex,
                                   })
                                 : __item}
                             </td>
